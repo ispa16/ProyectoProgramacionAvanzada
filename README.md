@@ -6,7 +6,7 @@
 
 ##  **Integrantes** 
 Santiago David García Jaén<br>
-Israel Andres Tapia Morales
+Israel Andrés Tapia Morales
 ##  **Docente** 
 Jorge Afranio López Vargas
 ##  **Ciclo Académico**

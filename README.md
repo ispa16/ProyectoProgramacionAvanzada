@@ -4,13 +4,14 @@
   <img src=https://www.utpl.edu.ec/manual_imagen/images/institucional/UTPL-INSTITUCIONAL-color.jpg />
 </p>
 
-##  **Integrantes** 
+<div align="center">
+<h2>Integrantes</h2>
 Santiago David García Jaén<br>
-Israel Andrés Tapia Morales
-##  **Docente** 
+Israel Andrés Tapia Morales<br>
+<h2>Docente</h2>
 Jorge Afranio López Vargas
-##  **Ciclo Académico**
-Abril 2020 - Agosto 2020
+<h2>Ciclo Académico</h2>
+Abril 2020 - Agosto 2020 </div>
 
 ## Objetivo
 Este repositorio tiene como fin extraer información y estadísticas interesantes de un dataset de tipo CSV denominado <b>"Datos_ENEMDU_PEA_v2.csv"</b>, mediante el uso de programación avanzada, específicamente de una API, <b>APACHE SPARK</b>.

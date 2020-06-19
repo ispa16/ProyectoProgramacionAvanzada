@@ -5,12 +5,12 @@
 </p>
 
 ###  **Integrantes**: 
-*  <b>Santiago Garcia</b> <br>
-*  <b>Israel Tapia</b>
+Santiago David García Jaén<<br>
+Israel Andres Tapia Morales
 ###  **Profesor**: 
-* <b>Jorge López</b>
+Jorge Afranio López Vargas</b>
 ###  **Ciclo Academico**: 
-* <b>Abril 2020 - Agosto 2020</b>
+Abril 2020 - Agosto 2020</b>
 
 
 ## Problemática

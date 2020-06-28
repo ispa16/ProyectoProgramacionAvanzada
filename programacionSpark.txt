@@ -5,14 +5,14 @@ val myDataSchema = StructType( Array( StructField("id_persona", DecimalType(26, 
 
 val data = spark.read.schema(myDataSchema).option("header", "true").option("delimiter", "\t").csv("C:/Users/Sant Garcia/Downloads/Datos_ENEMDU_PEA_v2.csv")
 
+val  afro = data.where($"etnia" === "2 - Afroecuatoriano")
 
-val etnias = data.where($"etnia" === "2 - Afroecuatoriano")
 
-etnias.count
-	res11: Long = 8202
+ afro.count
+	Long = 8202
 
-Etnias 
-	scala> data.groupBy("etnia").count().sort(desc("count")).show(false)
+ afro 
+	data.groupBy("etnia").count().sort(desc("count")).show(false)
 	+-------------------+------+
 	|etnia              |count |
 	+-------------------+------+
@@ -27,19 +27,22 @@ Etnias
 	+-------------------+------+
 
 
-print(f"${(etnias.count * 100)/data.count.toDouble}%.2f%% Afroecuatorianos")
+¿Cuál es el porcentaje de afroecutarioanos(personas de descendencia Africana, nacidas en Ecuador) a las que se les tomo la encuesta?
+	
+	print(f"${( afro.count * 100)/data.count.toDouble}%.2f%% Afroecuatorianos")
 
 	1.32% Afroecuatorianos
 
 
-cantidad de afroecuatorianos que no tienen trabajo(desempleo abierto: busqueda de empleo durante el mes anterior a la encuesta)?
+cantidad de afroecuatorianos que estan con desempleo abierto (busqueda de empleo durante el mes anterior a la encuesta sin ser encontrado)?
 
-	etnias.where($"condicion_actividad" === "7 - Desempleo abierto").count
-	res10: Long = 600
-
-	val afroEduc = etnias.where($"condicion_actividad" === "7 - Desempleo abierto") 
+	 afro.where($"condicion_actividad" === "7 - Desempleo abierto").count
+	
+	Long = 600
 
 Que nivel de educacion tienen los afroecuatorianos desempleados abiertamente?
+
+	val afroEduc =  afro.where($"condicion_actividad" === "7 - Desempleo abierto") 
 
 	afroEduc.groupBy("nivel_de_instruccion").count().as("cantidad").sort(desc("count")).show(false)
 	+------------------------------+-----+
@@ -56,16 +59,49 @@ Que nivel de educacion tienen los afroecuatorianos desempleados abiertamente?
 	|02 - Centro de alfabetización |1    |
 	+------------------------------+-----+
 
-Cantidad de afroecuatorianos que estan con subempleo
+¿Puede una persona afroecuatoriana con desempleo abierto, tener un ingreso laboral diferente de 0? ¿No es esto contradictorio? Compruebelo.
 
-	etnias.where($"condicion_actividad" === "2 - Subempleo por insuficiencia de tiempo de trabajo").count
-	res13: Long = 1409
+	afroEduc.where($"ingreso_laboral" > 0)).show()
 
-	etnias.where($"condicion_actividad" === "3 - Subempleo por insuficiencia de ingresos").count
-	res14: Long = 280
+	afroEduc.where($"ingreso_laboral" > 0).count
+	Long = 16   
 
 
-cantidad de afroecuatorianos que no tienen trabajo(desempleo oculto: no busqueda de empleo por tener trabajo esporadico, o esperar que lo llamen)
+	¿Cómo es posible que una persona con un "desempleo abierto" tenga un ingreso laboral que no sea 0?
+
+	Se puede considerar varios errores posibles:
+	
+	Primero: La sentencia este mal escrita o con un error, lo cual es posible, pero se descarta al usar otra herramienta para comprobar 
+	su veracidad (excel) en el cual demuestra usando filtros que existen encuestados afroecuatorianos, con desempleo abierto que tienen 
+	un ingreso laboral mayor a 0.
+
+	Segundo: El archivo de origen vino con defectos, otra opcion posible, pero tambien descartada cuando leemos los significados de cada
+	columna.
+
+	Respuesta: Al encontrar la pagina web....
+	
+
+Cual es el valor maximo y minimo que gana un afroecuatoriano que tiene el nivel mas alto de estudios (Post-grado)
+
+	val afroEducSec = (afroEduc.where($"nivel_de_instruccion" === "06 - Secundaria"))
+
+	afroEducSec.select(max("ingreso_laboral")).show()
+	+--------------------+
+	|max(ingreso_laboral)|
+	+--------------------+
+	|                 680|
+	+--------------------+
+
+
+
+	afroEducSec.select(min("ingreso_laboral")).show()
+	+--------------------+
+	|min(ingreso_laboral)|
+	+--------------------+
+	|                   0|
+	+--------------------+
+
+
 
 
 

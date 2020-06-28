@@ -7,11 +7,9 @@ val data = spark.read.schema(myDataSchema).option("header", "true").option("deli
 
 val  afro = data.where($"etnia" === "2 - Afroecuatoriano")
 
-
- afro.count
-	Long = 8202
-
- afro 
+afro.count
+Long = 8202
+	
 	data.groupBy("etnia").count().sort(desc("count")).show(false)
 	+-------------------+------+
 	|etnia              |count |
@@ -27,20 +25,32 @@ val  afro = data.where($"etnia" === "2 - Afroecuatoriano")
 	+-------------------+------+
 
 
-¿Cuál es el porcentaje de afroecutarioanos(personas de descendencia Africana, nacidas en Ecuador) a las que se les tomo la encuesta?
+¿Cuál es el porcentaje de afroecuatorianos (personas de descendencia Africana, nacidas en Ecuador) con respecto al porcentaje total de personas 
+a las que se les tomo la encuesta?
 	
-	print(f"${( afro.count * 100)/data.count.toDouble}%.2f%% Afroecuatorianos")
+	print(f"${(afro.count * 100)/data.count.toDouble}%.2f%% Afroecuatorianos")
 
 	1.32% Afroecuatorianos
 
+¿Cuál es la clasificacion de afroecuatorianos con respecto a sus condicion laboral (condicion_actividad)?
+	
+	print(f"${(afro.where($"condicion_actividad" === "1 - Empleo Adecuado/Pleno").count * 100)/afro.count.toDouble}%.2f%% Empleo Adecuado\n${(afro.where	($"condicion_actividad" === "2 - Subempleo por insuficiencia de tiempo de trabajo").count * 100)/afro.count.toDouble}%.2f%% Subempleo por insuficiencia de 	trabajo\n${(afro.where($"condicion_actividad" === "4 - Otro empleo no pleno").count * 100)/afro.count.toDouble}%.2f%% Otro empleo no pleno\n${(afro.where	($"condicion_actividad" === "5 - Empleo no remunerado").count * 100)/afro.count.toDouble}%.2f%% Empleo no remunerado\n${(afro.where($"condicion_actividad" === 	"6 - Empleo no clasificado").count * 100)/afro.count.toDouble}%.2f%% Empleono clasficado\n${(afro.where($"condicion_actividad" === "7 - Desempleo 	abierto").count * 100)/afro.count.toDouble}%.2f%% Desempleo Abierto\n${(afro.where($"condicion_actividad" === "8 - Desempleo oculto").count * 	100)/afro.count.toDouble}%.2f%% Desempleo Oculto")
 
-cantidad de afroecuatorianos que estan con desempleo abierto (busqueda de empleo durante el mes anterior a la encuesta sin ser encontrado)?
+	38.50% Empleo Adecuado
+	17.18% Subempleo por insuficiencia de trabajo
+	24.58% Otro empleo no pleno
+	6.83% Empleo no remunerado
+	0.39% Empleono clasficado
+	7.32% Desempleo Abierto
+	1.79% Desempleo Oculto
 
-	 afro.where($"condicion_actividad" === "7 - Desempleo abierto").count
+¿Cuál es la cantidad de afroecuatorianos que estan con desempleo abierto(busqueda activamente de empleo durante el mes anterior a la encuesta sin exito)?
+
+	afro.where($"condicion_actividad" === "7 - Desempleo abierto").count
 	
 	Long = 600
 
-Que nivel de educacion tienen los afroecuatorianos desempleados abiertamente?
+¿Cuál es el nivel de educación que tienen los afroecuatorianos desempleados abiertamente?
 
 	val afroEduc =  afro.where($"condicion_actividad" === "7 - Desempleo abierto") 
 
@@ -69,7 +79,7 @@ Que nivel de educacion tienen los afroecuatorianos desempleados abiertamente?
 
 	¿Cómo es posible que una persona con un "desempleo abierto" tenga un ingreso laboral que no sea 0?
 
-	Se puede considerar varios errores posibles:
+	Se puede considerar varios posibles errores:
 	
 	Primero: La sentencia este mal escrita o con un error, lo cual es posible, pero se descarta al usar otra herramienta para comprobar 
 	su veracidad (excel) en el cual demuestra usando filtros que existen encuestados afroecuatorianos, con desempleo abierto que tienen 
@@ -78,29 +88,27 @@ Que nivel de educacion tienen los afroecuatorianos desempleados abiertamente?
 	Segundo: El archivo de origen vino con defectos, otra opcion posible, pero tambien descartada cuando leemos los significados de cada
 	columna.
 
-	Respuesta: Al encontrar la pagina web....
+	Respuesta: La pagina web desde donde se proveyeron los datos, ofrece informacion acerca de que es el desempleo abierto y que 
+	considera el mismo. Siendo asi"
 	
 
-Cual es el valor maximo y minimo que gana un afroecuatoriano que tiene el nivel mas alto de estudios (Post-grado)
+¿Cuál es el valor maximo y minimo que gana un afroecuatoriano que tiene el nivel mas alto de estudios (Post-grado)?
 
-	val afroEducSec = (afroEduc.where($"nivel_de_instruccion" === "06 - Secundaria"))
+	val afroEducPost = (afro.where($"nivel_de_instruccion" === "10 - Post-grado"))
 
-	afroEducSec.select(max("ingreso_laboral")).show()
-	+--------------------+
-	|max(ingreso_laboral)|
-	+--------------------+
-	|                 680|
-	+--------------------+
-
-
-
-	afroEducSec.select(min("ingreso_laboral")).show()
-	+--------------------+
-	|min(ingreso_laboral)|
-	+--------------------+
-	|                   0|
-	+--------------------+
-
+	afroEducPost.select("ingreso_laboral").summary().show()
+	+-------+------------------+
+	|summary|   ingreso_laboral|
+	+-------+------------------+
+	|  count|                69|
+	|   mean|1491.8115942028985|
+	| stddev|1000.6284389346398|
+	|    min|                 0|
+	|    25%|               890|
+	|    50%|              1228|
+	|    75%|              1676|
+	|    max|              4790|
+	+-------+------------------+
 
 
 

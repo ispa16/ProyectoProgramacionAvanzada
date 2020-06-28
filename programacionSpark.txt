@@ -5,10 +5,6 @@ val myDataSchema = StructType( Array( StructField("id_persona", DecimalType(26, 
 
 val data = spark.read.schema(myDataSchema).option("header", "true").option("delimiter", "\t").csv("C:/Users/Sant Garcia/Downloads/Datos_ENEMDU_PEA_v2.csv")
 
-val  afro = data.where($"etnia" === "2 - Afroecuatoriano")
-
-afro.count
-Long = 8202
 	
 	data.groupBy("etnia").count().sort(desc("count")).show(false)
 	+-------------------+------+
@@ -25,56 +21,60 @@ Long = 8202
 	+-------------------+------+
 
 
-¿Cuál es el porcentaje de afroecuatorianos (personas de descendencia Africana, nacidas en Ecuador) con respecto al porcentaje total de personas 
+¿Cuál es el porcentaje de indigenas (personas de población nativa u originaria del pais) con respecto al porcentaje total de personas 
 a las que se les tomo la encuesta?
+		
+	val indg = data.where($"etnia" === "1 - Indígena")
+
+	print(f"${(indg.count * 100)/data.count.toDouble}%.2f%% De Indígenas encuestados")
+	12.12% De Indígenas encuestados
+
+
+¿Cuál es la clasificacion de indigenas con respecto a sus condicion laboral (condicion_actividad)?
 	
-	print(f"${(afro.count * 100)/data.count.toDouble}%.2f%% Afroecuatorianos")
+	print(f"${(indg.where($"condicion_actividad" === "1 - Empleo Adecuado/Pleno").count * 100)/indg.count.toDouble}%.2f%% Empleo Adecuado\n${(indg.where($"condicion_actividad" === "2 - Subempleo por insuficiencia de tiempo de trabajo").count * 100)/indg.count.toDouble}%.2f%% Subempleo por insuficiencia de trabajo\n${(indg.where($"condicion_actividad" === "4 - Otro empleo no pleno").count * 100)/indg.count.toDouble}%.2f%% Otro empleo no pleno\n${(indg.where($"condicion_actividad" === "5 - Empleo no remunerado").count * 100)/indg.count.toDouble}%.2f%% Empleo no remunerado\n${(indg.where($"condicion_actividad" === "6 - Empleo no clasificado").count * 100)/indg.count.toDouble}%.2f%% Empleo no clasificado\n${(indg.where($"condicion_actividad" === "7 - Desemple
+o abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.where($"condicion_actividad" === "8 - Desempleo oculto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Oculto
+")
 
-	1.32% Afroecuatorianos
+	17.55% Empleo Adecuado
+	12.65% Subempleo por insuficiencia de trabajo
+	33.65% Otro empleo no pleno
+	30.48% Empleo no remunerado
+	0.08% Empleo no clasificado
+	1.21% Desempleo Abierto
+	0.47% Desempleo Oculto
 
-¿Cuál es la clasificacion de afroecuatorianos con respecto a sus condicion laboral (condicion_actividad)?
-	
-	print(f"${(afro.where($"condicion_actividad" === "1 - Empleo Adecuado/Pleno").count * 100)/afro.count.toDouble}%.2f%% Empleo Adecuado\n${(afro.where	($"condicion_actividad" === "2 - Subempleo por insuficiencia de tiempo de trabajo").count * 100)/afro.count.toDouble}%.2f%% Subempleo por insuficiencia de 	trabajo\n${(afro.where($"condicion_actividad" === "4 - Otro empleo no pleno").count * 100)/afro.count.toDouble}%.2f%% Otro empleo no pleno\n${(afro.where	($"condicion_actividad" === "5 - Empleo no remunerado").count * 100)/afro.count.toDouble}%.2f%% Empleo no remunerado\n${(afro.where($"condicion_actividad" === 	"6 - Empleo no clasificado").count * 100)/afro.count.toDouble}%.2f%% Empleono clasficado\n${(afro.where($"condicion_actividad" === "7 - Desempleo 	abierto").count * 100)/afro.count.toDouble}%.2f%% Desempleo Abierto\n${(afro.where($"condicion_actividad" === "8 - Desempleo oculto").count * 	100)/afro.count.toDouble}%.2f%% Desempleo Oculto")
 
-	38.50% Empleo Adecuado
-	17.18% Subempleo por insuficiencia de trabajo
-	24.58% Otro empleo no pleno
-	6.83% Empleo no remunerado
-	0.39% Empleono clasficado
-	7.32% Desempleo Abierto
-	1.79% Desempleo Oculto
+¿Cuál es la cantidad de Indígenas que estan con desempleo abierto(busqueda activamente de empleo durante el mes anterior a la encuesta sin exito)?
 
-¿Cuál es la cantidad de afroecuatorianos que estan con desempleo abierto(busqueda activamente de empleo durante el mes anterior a la encuesta sin exito)?
+	indg.where($"condicion_actividad" === "7 - Desempleo abierto").count
+	Long = 915
 
-	afro.where($"condicion_actividad" === "7 - Desempleo abierto").count
-	
-	Long = 600
+¿Cuál es el nivel de educación que tienen los Indígenas desempleados abiertamente?
 
-¿Cuál es el nivel de educación que tienen los afroecuatorianos desempleados abiertamente?
+	val indgEduc =  indg.where($"condicion_actividad" === "7 - Desempleo abierto") 
 
-	val afroEduc =  afro.where($"condicion_actividad" === "7 - Desempleo abierto") 
-
-	afroEduc.groupBy("nivel_de_instruccion").count().as("cantidad").sort(desc("count")).show(false)
+	indgEduc.groupBy("nivel_de_instruccion").count().as("cantidad").sort(desc("count")).show(false)
 	+------------------------------+-----+
 	|nivel_de_instruccion          |count|
 	+------------------------------+-----+
-	|06 - Secundaria               |230  |
-	|07 - Educación  Media         |164  |
-	|09 - Superior Universitario   |98   |
-	|04 - Primaria                 |61   |
-	|05 - Educación Básica         |28   |
-	|08 - Superior no universitario|8    |
-	|01 - Ninguno                  |7    |
-	|10 - Post-grado               |3    |
-	|02 - Centro de alfabetización |1    |
+	|07 - Educación  Media         |240  |
+	|06 - Secundaria               |226  |
+	|04 - Primaria                 |197  |
+	|09 - Superior Universitario   |106  |
+	|05 - Educación Básica         |93   |
+	|08 - Superior no universitario|26   |
+	|01 - Ninguno                  |22   |
+	|02 - Centro de alfabetización |4    |
+	|10 - Post-grado               |1    |
 	+------------------------------+-----+
 
-¿Puede una persona afroecuatoriana con desempleo abierto, tener un ingreso laboral diferente de 0? ¿No es esto contradictorio? Compruebelo.
+¿Puede una persona Indigena con desempleo abierto, tener un ingreso laboral diferente de 0? ¿No es esto contradictorio? Compruebelo.
 
-	afroEduc.where($"ingreso_laboral" > 0)).show()
+	indgEduc.where($"ingreso_laboral" > 0)).show()
 
-	afroEduc.where($"ingreso_laboral" > 0).count
-	Long = 16   
+	indgEduc.where($"ingreso_laboral" > 0).count
+	Long = 51
 
 
 	¿Cómo es posible que una persona con un "desempleo abierto" tenga un ingreso laboral que no sea 0?
@@ -82,33 +82,58 @@ a las que se les tomo la encuesta?
 	Se puede considerar varios posibles errores:
 	
 	Primero: La sentencia este mal escrita o con un error, lo cual es posible, pero se descarta al usar otra herramienta para comprobar 
-	su veracidad (excel) en el cual demuestra usando filtros que existen encuestados afroecuatorianos, con desempleo abierto que tienen 
+	su veracidad (excel) en el cual demuestra usando filtros que existen encuestados indigenas, con desempleo oculto que tienen 
 	un ingreso laboral mayor a 0.
 
 	Segundo: El archivo de origen vino con defectos, otra opcion posible, pero tambien descartada cuando leemos los significados de cada
 	columna.
 
-	Respuesta: La pagina web desde donde se proveyeron los datos, ofrece informacion acerca de que es el desempleo abierto y que 
-	considera el mismo. Siendo asi"
+	Posible Respuesta: La pagina web desde donde se proveyeron los datos, ofrece información acerca de que es el desempleo oculto y que 
+	considera el mismo. Siendo asi el significado de esta variable "Personas sin empleo, que no estuvieron empleados en la semana pasada y que buscaron trabajo e
+	hicieron gestiones concretas para conseguir empleo o para establecer algún negocio en las cuatro semanas anteriores a la entrevista."
+	
+	Se puede considerar como verdadera esta sentencia ya que, podemos deducir que el ingreso laboral que decretaron estas personas en la encuesta
+	pertenece al ingreso laboral que recibian una semana antes de la encuesta, cuando aun estaban empleados.
 	
 
-¿Cuál es el valor maximo y minimo que gana un afroecuatoriano que tiene el nivel mas alto de estudios (Post-grado)?
+¿Cuál es el valor máximo y minimo que gana un indígena que tiene el nivel mas alto de estudios (Post-grado)?
 
-	val afroEducPost = (afro.where($"nivel_de_instruccion" === "10 - Post-grado"))
+	val indgEducPost = (indg.where($"nivel_de_instruccion" === "10 - Post-grado"))
 
-	afroEducPost.select("ingreso_laboral").summary().show()
-	+-------+------------------+
-	|summary|   ingreso_laboral|
-	+-------+------------------+
-	|  count|                69|
-	|   mean|1491.8115942028985|
-	| stddev|1000.6284389346398|
-	|    min|                 0|
-	|    25%|               890|
-	|    50%|              1228|
-	|    75%|              1676|
-	|    max|              4790|
-	+-------+------------------+
+	indgEducPost.select("ingreso_laboral").summary("max", "min").show()
+	+-------+---------------+
+	|summary|ingreso_laboral|
+	+-------+---------------+
+	|    max|           5264|
+	|    min|              0|
+	+-------+---------------+
+	
+
+¿Existe una diferencia de salario que un indigena(post-grado) recibe de ingreso laboral máximo, con respecto al valor de ingreso laboral máximo de un ecuatoriano meztizo(post-grado)?
+	
+	indgEducPost.select(max("ingreso_laboral").as("Indigena(Post-grago), Máximo ingreso Laboral")).show()
+	+--------------------------------------------+
+	|Indigena(Post-grago), Maximo ingreso Laboral|
+	+--------------------------------------------+
+	|                                        5264|
+	+--------------------------------------------+
+
+	val mezt = data.where($"etnia" === "6 - Mestizo")
+
+	val meztEducPost = mezt.where($"nivel_de_instruccion" === "10 - Post-grado")
+
+	meztEducPost.select(max("ingreso_laboral").as("Mestizo(Post-grado), Máximo ingreso Laboral")).show()
+	+-------------------------------------------+
+	|Mestizo(Post-grado), Maximo ingreso Laboral|
+	+-------------------------------------------+
+	|                                      30000|
+	+-------------------------------------------+
+
+¿Qué porcentaje del salario maximo de un meztizo (Post-grado), recibe un indigina con las mismas características?
+
+	print(f"Recibe el ${(5264 * 100)/30000.toDouble}%.2f%% del salario maximo de un meztizo con similares caracteristicas\n")
+	Recibe el 17.55% del salario maximo de un meztizo con similares caracteristicas	
+
 
 
 

@@ -1,0 +1,73 @@
+import org.apache.spark.sql.types._
+
+val myDataSchema = StructType( Array( StructField("id_persona", DecimalType(26, 0), true),  StructField("anio", IntegerType, true), StructField("mes", IntegerType, true), StructField("provincia", IntegerType, true), StructField("canton", IntegerType, true), StructField("area", StringType, true), StructField("genero", StringType, true), StructField("edad", IntegerType, true), StructField("estado_civil", StringType, true), StructField("nivel_de_instruccion", StringType, true), StructField("etnia", StringType, true), StructField("ingreso_laboral", IntegerType, true), StructField("condicion_actividad", StringType, true), StructField("sectorizacion", StringType, true), StructField("grupo_ocupacion", StringType, true), StructField("rama_actividad", StringType, true), StructField("factor_expansion", DoubleType, true)))
+
+
+val data = spark.read.schema(myDataSchema).option("header", "true").option("delimiter", "\t").csv("C:/Users/Sant Garcia/Downloads/Datos_ENEMDU_PEA_v2.csv")
+
+
+val etnias = data.where($"etnia" === "2 - Afroecuatoriano")
+
+etnias.count
+	res11: Long = 8202
+
+Etnias 
+	scala> data.groupBy("etnia").count().sort(desc("count")).show(false)
+	+-------------------+------+
+	|etnia              |count |
+	+-------------------+------+
+	|6 - Mestizo        |491923|
+	|1 - Indígena       |75499 |
+	|5 - Montubio       |23247 |
+	|7 - Blanco         |9209  |
+	|3 - Negro          |8451  |
+	|2 - Afroecuatoriano|8202  |
+	|4 - Mulato         |5936  |
+	|8 - Otro           |309   |
+	+-------------------+------+
+
+
+print(f"${(etnias.count * 100)/data.count.toDouble}%.2f%% Afroecuatorianos")
+
+	1.32% Afroecuatorianos
+
+
+cantidad de afroecuatorianos que no tienen trabajo(desempleo abierto: busqueda de empleo durante el mes anterior a la encuesta)?
+
+	etnias.where($"condicion_actividad" === "7 - Desempleo abierto").count
+	res10: Long = 600
+
+	val afroEduc = etnias.where($"condicion_actividad" === "7 - Desempleo abierto") 
+
+Que nivel de educacion tienen los afroecuatorianos desempleados abiertamente?
+
+	afroEduc.groupBy("nivel_de_instruccion").count().as("cantidad").sort(desc("count")).show(false)
+	+------------------------------+-----+
+	|nivel_de_instruccion          |count|
+	+------------------------------+-----+
+	|06 - Secundaria               |230  |
+	|07 - Educación  Media         |164  |
+	|09 - Superior Universitario   |98   |
+	|04 - Primaria                 |61   |
+	|05 - Educación Básica         |28   |
+	|08 - Superior no universitario|8    |
+	|01 - Ninguno                  |7    |
+	|10 - Post-grado               |3    |
+	|02 - Centro de alfabetización |1    |
+	+------------------------------+-----+
+
+Cantidad de afroecuatorianos que estan con subempleo
+
+	etnias.where($"condicion_actividad" === "2 - Subempleo por insuficiencia de tiempo de trabajo").count
+	res13: Long = 1409
+
+	etnias.where($"condicion_actividad" === "3 - Subempleo por insuficiencia de ingresos").count
+	res14: Long = 280
+
+
+cantidad de afroecuatorianos que no tienen trabajo(desempleo oculto: no busqueda de empleo por tener trabajo esporadico, o esperar que lo llamen)
+
+
+
+
+

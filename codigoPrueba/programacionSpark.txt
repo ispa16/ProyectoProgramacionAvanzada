@@ -109,30 +109,310 @@ o abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.w
 	+-------+---------------+
 	
 
-¿Existe una diferencia de salario que un indigena(post-grado) recibe de ingreso laboral máximo, con respecto al valor de ingreso laboral máximo de un ecuatoriano meztizo(post-grado)?
+¿Existe una diferencia de salario que un indigena(post-grado) recibe de ingreso laboral promedio, con respecto al valor de ingreso laboral promedio de un ecuatoriano meztizo(post-grado)?
 	
-	indgEducPost.select(max("ingreso_laboral").as("Indigena(Post-grago), Máximo ingreso Laboral")).show()
-	+--------------------------------------------+
-	|Indigena(Post-grago), Maximo ingreso Laboral|
-	+--------------------------------------------+
-	|                                        5264|
-	+--------------------------------------------+
+	---------------- Indigenas-----------------------
 
-	val mezt = data.where($"etnia" === "6 - Mestizo")
+	-- Summary de Indigenas con Postgrado (Con acotas)
 
-	val meztEducPost = mezt.where($"nivel_de_instruccion" === "10 - Post-grado")
+		indgEducPost.select("ingreso_laboral").summary().show()
 
-	meztEducPost.select(max("ingreso_laboral").as("Mestizo(Post-grado), Máximo ingreso Laboral")).show()
-	+-------------------------------------------+
-	|Mestizo(Post-grado), Maximo ingreso Laboral|
-	+-------------------------------------------+
-	|                                      30000|
-	+-------------------------------------------+
+		+-------+------------------+
+		|summary|   ingreso_laboral|
+		+-------+------------------+
+		|  count|               159|
+		|   mean|1411.7672955974842|
+		| stddev| 950.1400043069507|
+		|    min|                 0|
+		|    25%|               827|
+		|    50%|              1175|
+		|    75%|              1840|
+		|    max|              5264|
+		+-------+------------------+
+
+	-- ¿Existen valores nulos?
+
+		indgEducPost.select("ingreso_laboral").groupBy("ingreso_laboral").count().sort(desc("count")).show(5)
+		+---------------+-----+
+		|ingreso_laboral|count|
+		+---------------+-----+
+		|           null|    5|
+		|            800|    4|
+		|              0|    4|
+		|           3200|    3|
+		|           1500|    3|
+		+---------------+-----+
+
+	-- Limpieza de Nulos
+
+		val postIndg = indgEducPost.select("ingreso_laboral").where($"ingreso_laboral".isNotNull)
+
+	-- Busqueda de acotas
+
+		val cantValoresEnDifRangos =  scala.collection.mutable.ListBuffer[Long]()
+		val minValue = 0.0
+		val maxValue = 5264
+		val bins = 5.0
+		val range = (maxValue - minValue)/bins
+		var minCounter = minValue
+		var maxCounter = range
+		while (minCounter < maxValue){
+		  val valoresEnUnRango = postIndg.where($"ingreso_laboral".between(minCounter,maxCounter))
+		  cantValoresEnDifRangos.+=(valoresEnUnRango.count())
+		  minCounter = maxCounter
+		  maxCounter = maxCounter + range
+		}
+
+	-- Resultados de rangos
+
+		println("Valores en diferentes rangos: ")
+		cantValoresEnDifRangos.foreach(println)
+
+		77 rango 0 - 1053
+		49 rango 1053 - 2106
+		23 rango 2106 - 3158
+		8  rango 3158 - 4211 
+		2  rango 4211 - 5264
+
+	-- Promedio
+
+		val prom = postIndg.select(mean("ingreso_laboral")).first()(0).asInstanceOf[Double]
+		prom: Double = 1411.7672955974842
+
+	-- Desviacion estandar
+
+		val desviacion = postIndg.select(stddev("ingreso_laboral")).first()(0).asInstanceOf[Double]
+		desviacion: Double = 950.1400043069507
+
+	-- Limite Inferior - Limite Superior
+
+		val limInf = prom - 3 * desviacion
+		limInf: Double = -1438.6527173233678
+
+		val limSup = prom + 3 * desviacion
+		limSup: Double = 4262.187308518336
+
+	-- Indigenas con Postgrado (Sin acotas)
+
+		val indgPostSinAcotas = postIndg.where($"ingreso_laboral" > limInf && $"ingreso_laboral" < limSup)
+
+	-- Summary de Indigenas con Postgrado (Sin acotas)						-- Summary de Indigenas con Postgrado (Con acotas)
+
+		indgPostSinAcotas.select("ingreso_laboral").summary().show			indgEducPost.select("ingreso_laboral").summary().show()
+		+-------+-----------------+											+-------+------------------+						
+		|summary|  ingreso_laboral|											|summary|   ingreso_laboral|
+		+-------+-----------------+											+-------+------------------+
+		|  count|              158|											|  count|               159|
+		|   mean|1387.386075949367|											|   mean|1411.7672955974842|
+		| stddev|901.8855458948535|											| stddev| 950.1400043069507|
+		|    min|                0|											|    min|                 0|						
+		|    25%|              827|											|    25%|               827|
+		|    50%|             1095|											|    50%|              1175|		
+		|    75%|             1795|											|    75%|              1840|
+		|    max|             4244|											|    max|              5264|
+		+-------+-----------------+											+-------+------------------+
+		
+
+
+	------------------------- Meztizos ---------------------------
+
+	-- Summary de Meztizos con Postgrado (Con acotas)
+
+		meztEducPost.select("ingreso_laboral").summary().show()
+		+-------+------------------+
+		|summary|   ingreso_laboral|
+		+-------+------------------+
+		|  count|              9015|
+		|   mean|1633.3148086522463|
+		| stddev| 1329.991669764641|
+		|    min|                 0|
+		|    25%|               887|
+		|    50%|              1300|
+		|    75%|              2049|
+		|    max|             30000|
+		+-------+------------------+
+
+	-- ¿Existen valores nulos?
+
+		meztEducPost.select("ingreso_laboral").groupBy("ingreso_laboral").count().sort(desc("count")).show(5)
+		+---------------+-----+
+		|ingreso_laboral|count|
+		+---------------+-----+
+		|           null|  552|
+		|           1000|  182|
+		|           2000|  158|
+		|            800|  133|
+		|           1500|  132|
+		+---------------+-----+
+
+	-- Limpieza de Nulos
+
+		val postMezt = meztEducPost.select("ingreso_laboral").where($"ingreso_laboral".isNotNull)
+
+	-- Busqueda de acotas
+		
+		val cantValoresEnDifRangos =  scala.collection.mutable.ListBuffer[Long]()
+		val minValue = 0.0
+		val maxValue = 30000
+		val bins = 5.0
+		val range = (maxValue - minValue)/bins
+		var minCounter = minValue
+		var maxCounter = range
+		while (minCounter < maxValue){
+		  val valoresEnUnRango = postMezt.where($"ingreso_laboral".between(minCounter,maxCounter))
+		  cantValoresEnDifRangos.+=(valoresEnUnRango.count())
+		  minCounter = maxCounter
+		  maxCounter = maxCounter + range
+		}
+
+	-- Resultados de rangos
+
+		println("Valores en diferentes rangos: ")
+		cantValoresEnDifRangos.foreach(println)
+
+		8939 rango 0 - 6000
+		74   rango 6000 - 12000
+		6    rango 12000 - 18000
+		4    rango 18000 - 24000 
+		4    rango 24000 - 30000
+
+	-- Promedio
+
+		val prom = postMezt.select(mean("ingreso_laboral")).first()(0).asInstanceOf[Double]
+		prom: Double = 1633.3148086522463
+		
+	--Desviacion estandar
+
+		val desviacion = postMezt.select(stddev("ingreso_laboral")).first()(0).asInstanceOf[Double]
+		desviacion: Double = 1329.991669764641
+
+	-- Limite Inferior - Limite Superior
+
+		val limInf = prom - 3 * desviacion
+		limInf: Double = -2356.660200641677
+
+		val limSup = prom + 3 * desviacion
+		limSup: Double = 5623.289817946169
+
+	-- Meztizos con Postgrado (Sin acotas)
+
+		val meztPostSinAcotas = postMezt.where($"ingreso_laboral" > limInf && $"ingreso_laboral" < limSup)
+		
+	-- Summary de Meztizos con Postgrado (Sin acotas)						-- Summary de Meztizos con Postgrado (Con acotas)
+
+		meztPostSinAcotas.select("ingreso_laboral").summary().show			meztEducPost.select("ingreso_laboral").summary().show()
+		+-------+------------------+										+-------+------------------+						
+		|summary|   ingreso_laboral|										|summary|   ingreso_laboral|
+		+-------+------------------+										+-------+------------------+
+		|  count|              8910|										|  count|              9015|
+		|   mean|1553.2442199775533|										|   mean|1633.3148086522463|
+		| stddev| 991.3224947196214|										| stddev| 1329.991669764641|
+		|    min|                 0|										|    min|                 0|						
+		|    25%|               882|										|    25%|               887|
+		|    50%|              1299|										|    50%|              1300|		
+		|    75%|              2016|										|    75%|              2049|
+		|    max|              5620|										|    max|             30000|
+		+-------+------------------+										+-------+------------------+
+		
+
+	--------------------------------------------------- BLOXPLOTS -----------------------------------------------------	
+	------------------ Indigenas --------------------------
+
+		val cuartiles = postIndg.stat.approxQuantile("ingreso_laboral", Array (0.25, 0.75), 0.0)
+
+		val q1 = cuartiles(0)
+		q1: Double = 827.0
+
+		val q3 = cuartiles(1)
+		q3: Double = 1840.0
+
+		val iQR = q3 -q1
+		iQR: Double = 1013.0
+
+		val inferiorIQR = q1 -1.5 * iQR
+		inferiorIQR: Double = -692.5
+
+		val superiorIQR = q3 + 1.5 * iQR
+		superiorIQR: Double = 3359.5
+
+		val indgSinAcotasIQR = postIndg.where($"ingreso_laboral" > inferiorIQR && $"ingreso_laboral" < superiorIQR)
+		
+		indgSinAcotasIQR.select("ingreso_laboral").summary().show
+		+-------+------------------+
+		|summary|   ingreso_laboral|
+		+-------+------------------+
+		|  count|               152|
+		|   mean|1291.5526315789473|
+		| stddev| 773.8477081165695|
+		|    min|                 0|
+		|    25%|               821|
+		|    50%|              1041|
+		|    75%|              1650|
+		|    max|              3200|
+		+-------+------------------+
+
+	---------------------- Mestizos --------------------------
+
+		val cuartiles = postMezt.stat.approxQuantile("ingreso_laboral", Array (0.25, 0.75), 0.0)
+
+		val q1 = cuartiles(0)
+		q1: Double = 887.0
+
+		val q3 = cuartiles(1)
+		q3: Double = 2049.0	
+
+		val iQR = q3 -q1
+		iQR: Double = 1162.0
+
+		val inferiorIQR = q1 -1.5 * iQR
+		inferiorIQR: Double = -856.0
+
+		val superiorIQR = q3 + 1.5 * iQR
+		superiorIQR: Double = 3792.0
+
+		val meztSinAcotasIQR = postMezt.where($"ingreso_laboral" > inferiorIQR && $"ingreso_laboral" < superiorIQR)
+		
+
+		meztSinAcotasIQR.select("ingreso_laboral").summary().show
+		+-------+------------------+
+		|summary|   ingreso_laboral|
+		+-------+------------------+
+		|  count|              8533|
+		|   mean|1425.7911637173327|
+		| stddev| 794.6871187579726|
+		|    min|                 0|
+		|    25%|               870|
+		|    50%|              1237|
+		|    75%|              1930|
+		|    max|              3780|
+		+-------+------------------+
+
+
+		---------------------------------------------------------------------- RESPUESTA --------------------------------------------------------------------
+
+		Considerando los resultados de los 2 algoritmos, se puede deducir que en efecto, existe una diferencia entre lo que gana un indigena (post-grado) en promedio,
+		con lo que gana un meztizo de similares caracteristicas, pero realmente no es una diferencia significativa, es un valor encontrado en un rango entre 130 -170.
+		Vease:
+		
+		Algoritmo 1 (salario promedio):
+
+		indigena =  1387.386075949367		meztizo = 1553.2442199775533
+		
+			diferencia = | 1387.39 - 1553.24 | = |- 165.85 |
+			diferencia = 165.85
+
+		Algoritmo 2 (salario promedio):
+
+	 	indigena =  1291.5526315789473		meztizo = 1425.7911637173327
+
+			diferencia = | 1291.55 - 1425.8 | = |- 134.25 |
+			diferencia = 134.25
+
 
 ¿Qué porcentaje del salario maximo de un meztizo (Post-grado), recibe un indigina con las mismas características?
 
-	print(f"Recibe el ${(5264 * 100)/30000.toDouble}%.2f%% del salario maximo de un meztizo con similares caracteristicas\n")
-	Recibe el 17.55% del salario maximo de un meztizo con similares caracteristicas	
+	print(f"Recibe el ${(4264 * 100)/5620.toDouble}%.2f%% del salario maximo de un meztizo con similares caracteristicas\n")
+	Recibe el 75.87% del salario maximo de un meztizo con similares caracteristicas
 
 
 

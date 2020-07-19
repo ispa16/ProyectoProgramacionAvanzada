@@ -112,7 +112,6 @@ o abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.w
 ¿Existe una diferencia de salario que un indigena(post-grado) recibe de ingreso laboral promedio, con respecto al valor de ingreso laboral promedio de un ecuatoriano meztizo(post-grado)?
 	
 	---------------- Indigenas-----------------------
-
 	-- Summary de Indigenas con Postgrado (Con acotas)
 
 		indgEducPost.select("ingreso_laboral").summary().show()
@@ -216,6 +215,12 @@ o abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.w
 
 	------------------------- Meztizos ---------------------------
 
+		val mezt = data.where($"etnia" === "6 - Mestizo")
+
+	-- Meztizos PostGrado
+
+		val meztEducPost = mezt.where($"nivel_de_instruccion" === "10 - Post-grado")
+
 	-- Summary de Meztizos con Postgrado (Con acotas)
 
 		meztEducPost.select("ingreso_laboral").summary().show()
@@ -313,7 +318,6 @@ o abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.w
 		|    75%|              2016|										|    75%|              2049|
 		|    max|              5620|										|    max|             30000|
 		+-------+------------------+										+-------+------------------+
-		
 
 	--------------------------------------------------- BLOXPLOTS -----------------------------------------------------	
 	------------------ Indigenas --------------------------
@@ -387,7 +391,6 @@ o abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.w
 		|    max|              3780|
 		+-------+------------------+
 
-
 		---------------------------------------------------------------------- RESPUESTA --------------------------------------------------------------------
 
 		Considerando los resultados de los 2 algoritmos, se puede deducir que en efecto, existe una diferencia entre lo que gana un indigena (post-grado) en promedio,
@@ -417,16 +420,24 @@ o abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.w
 
 ¿Es posible que con el tiempo los niveles de desempleo en los indigenas hayan aumentado? ¿Es posible demostrar como ha variado su condicion laboral con el paso de los años?
 
-	indg.stat.crosstab("anio", "condicion_actividad").orderBy("anio_condicion_actividad").show
-	+------------------------+-------------------------+----------------------------------------------------+-------------------------------------------+----------------------+
-	|anio_condicion_actividad|1 - Empleo Adecuado/Pleno|2 - Subempleo por insuficiencia de tiempo de trabajo|3 - Subempleo por insuficiencia de ingresos|4 - Otro empleo no pleno|5 - Empleo no remunerado|6 - Empleo no clasificado|7 - Desempleo abierto|8 - Desempleo oculto|
-	+------------------------+-------------------------+----------------------------------------------------+-------------------------------------------+------------------------+------------------------+-------------------------+---------------------+--------------------+
-	|                    2015|                     3606|                                                1816|                                        543|                    6633|                    5126|                       15|                  262|                 134|
-	|                    2016|                     2609|                                                2150|                                        579|                    5264|                    4977|                        8|                  198|                  73|
-	|                    2017|                     3176|                                                3048|                                        947|                    6170|                    6088|                        8|                  186|                  85|
-	|                    2018|                     1856|                                                1258|                                        444|                    3585|                    3254|                       11|                  121|                  38|
-	|                    2019|                     2000|                                                1279|                                        445|                    3752|                    3565|                       17|                  148|                  25|
-	+------------------------+-------------------------+----------------------------------------------------+-------------------------------------------+-----------------------	-+------------------------+-------------------------+---------------------+--------------------+
+	indg.stat.crosstab("condicion_actividad", "anio").orderBy("condicion_actividad_anio").show(false)
+	+----------------------------------------------------+----+----+----+----+----+
+	|condicion_actividad_anio                            |2015|2016|2017|2018|2019|
+	+----------------------------------------------------+----+----+----+----+----+
+	|1 - Empleo Adecuado/Pleno                           |3606|2609|3176|1856|2000|
+	|2 - Subempleo por insuficiencia de tiempo de trabajo|1816|2150|3048|1258|1279|
+	|3 - Subempleo por insuficiencia de ingresos         |543 |579 |947 |444 |445 |
+	|4 - Otro empleo no pleno                            |6633|5264|6170|3585|3752|
+	|5 - Empleo no remunerado                            |5126|4977|6088|3254|3565|
+	|6 - Empleo no clasificado                           |15  |8   |8   |11  |17  |
+	|7 - Desempleo abierto                               |262 |198 |186 |121 |148 |
+	|8 - Desempleo oculto                                |134 |73  |85  |38  |25  |
+	+----------------------------------------------------+----+----+----+----+----+
+
+¿ ?
+
+	
+
 
 
 

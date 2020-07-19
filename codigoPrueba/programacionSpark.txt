@@ -415,6 +415,20 @@ o abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.w
 	Recibe el 75.87% del salario maximo de un meztizo con similares caracteristicas
 
 
+¿Es posible que con el tiempo los niveles de desempleo en los indigenas hayan aumentado? ¿Es posible demostrar como ha variado su condicion laboral con el paso de los años?
+
+	indg.stat.crosstab("anio", "condicion_actividad").orderBy("anio_condicion_actividad").show
+	+------------------------+-------------------------+----------------------------------------------------+-------------------------------------------+----------------------+
+	|anio_condicion_actividad|1 - Empleo Adecuado/Pleno|2 - Subempleo por insuficiencia de tiempo de trabajo|3 - Subempleo por insuficiencia de ingresos|4 - Otro empleo no pleno|5 - Empleo no remunerado|6 - Empleo no clasificado|7 - Desempleo abierto|8 - Desempleo oculto|
+	+------------------------+-------------------------+----------------------------------------------------+-------------------------------------------+------------------------+------------------------+-------------------------+---------------------+--------------------+
+	|                    2015|                     3606|                                                1816|                                        543|                    6633|                    5126|                       15|                  262|                 134|
+	|                    2016|                     2609|                                                2150|                                        579|                    5264|                    4977|                        8|                  198|                  73|
+	|                    2017|                     3176|                                                3048|                                        947|                    6170|                    6088|                        8|                  186|                  85|
+	|                    2018|                     1856|                                                1258|                                        444|                    3585|                    3254|                       11|                  121|                  38|
+	|                    2019|                     2000|                                                1279|                                        445|                    3752|                    3565|                       17|                  148|                  25|
+	+------------------------+-------------------------+----------------------------------------------------+-------------------------------------------+-----------------------	-+------------------------+-------------------------+---------------------+--------------------+
+
+
 
 
 

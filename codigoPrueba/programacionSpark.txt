@@ -418,7 +418,7 @@ o abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.w
 	Recibe el 75.87% del salario maximo de un meztizo con similares caracteristicas
 
 
-¿Es posible que con el tiempo los niveles de desempleo en los indigenas hayan aumentado? ¿Es posible demostrar como ha variado su condicion laboral con el paso de los años?
+¿Es posible que con el tiempo los niveles de empleo adecuado y desempleo en los indigenas hayan aumentado con respecto a los demas grupos poblacionales? ¿Es posible demostrar como ha variado su condicion laboral con el paso de los años?
 
 	indg.stat.crosstab("condicion_actividad", "anio").orderBy("condicion_actividad_anio").show(false)
 	+----------------------------------------------------+----+----+----+----+----+
@@ -434,14 +434,49 @@ o abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.w
 	|8 - Desempleo oculto                                |134 |73  |85  |38  |25  |
 	+----------------------------------------------------+----+----+----+----+----+
 
-¿ ?
+¿ Que hay con respecto a las personas que no son Indigenas? ¿Se puede observar una similaridad en cuanto a la estadistica?
 
+	val noIndg = data.where($"etnia" =!= "1 - Indígena")
+
+	noIndg.stat.crosstab("condicion_actividad", "anio").orderBy("condicion_actividad_anio").show(false)
+	+----------------------------------------------------+-----+-----+-----+-----+-----+
+	|condicion_actividad_anio                            |2015 |2016 |2017 |2018 |2019 |
+	+----------------------------------------------------+-----+-----+-----+-----+-----+
+	|1 - Empleo Adecuado/Pleno                           |52244|39231|50739|44735|43980|
+	|2 - Subempleo por insuficiencia de tiempo de trabajo|12429|13644|18765|15534|16607|
+	|3 - Subempleo por insuficiencia de ingresos         |2982 |3249 |4961 |3719 |3152 |
+	|4 - Otro empleo no pleno                            |31665|25127|29525|28593|29182|
+	|5 - Empleo no remunerado                            |9795 |8843 |11105|10126|10388|
+	|6 - Empleo no clasificado                           |403  |228  |275  |459  |601  |
+	|7 - Desempleo abierto                               |4145 |4087 |4631 |3832 |3896 |
+	|8 - Desempleo oculto                                |1146 |893  |944  |635  |782  |
+	+----------------------------------------------------+-----+-----+-----+-----+-----+
 	
+	Los datos demuestran que no ha habido algun tipo de discriminacion, todos los grupos poblacionales han demostrado que han tendido a la baja con respecto al empleo adecuado en el ecuador	
 
+Cual es el porcentaje de ingreso laboral que un indigena genera
 
+	val indg = data.where($"etnia" === "1 - Indígena")
 
+	print(f"${(indg.count * 100)/data.count.toDouble}%.2f%% De Indígenas encuestados")
+	12.12% De Indígenas encuestados
 
+De las personas indigenas ¿Es posible que hayan sido las mujeres las mas que menor valor de ingreso han obtenido? ¿Existe alguna diferencia significativa entre el porcentaje de ingresos laborales que generaron las mujeres en  con respecto a los hombres?
+	
+	indg.select(sum("ingreso_laboral")).show
+	+--------------------+
+	|sum(ingreso_laboral)|
+	+--------------------+
+	|            13925210|
+	+--------------------+
 
-
-
-
+	indg.groupBy("anio").pivot("genero").agg( round((sum("ingreso_laboral")*100)/13925210) ).orderBy("anio").show
+	+----+----------+---------+
+	|anio|1 - Hombre|2 - Mujer|
+	+----+----------+---------+
+	|2015|      18.0|      7.0|
+	|2016|      14.0|      5.0|
+	|2017|      17.0|      7.0|
+	|2018|      10.0|      4.0|
+	|2019|      11.0|      5.0|
+	+----+----------+---------+

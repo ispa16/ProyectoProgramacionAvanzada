@@ -454,13 +454,6 @@ o abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.w
 	
 	Los datos demuestran que no ha habido algun tipo de discriminacion, todos los grupos poblacionales han demostrado que han tendido a la baja con respecto al empleo adecuado en el ecuador	
 
-Cual es el porcentaje de ingreso laboral que un indigena genera
-
-	val indg = data.where($"etnia" === "1 - Indígena")
-
-	print(f"${(indg.count * 100)/data.count.toDouble}%.2f%% De Indígenas encuestados")
-	12.12% De Indígenas encuestados
-
 De las personas indigenas ¿Es posible que hayan sido las mujeres las mas que menor valor de ingreso han obtenido? ¿Existe alguna diferencia significativa entre el porcentaje de ingresos laborales que generaron las mujeres en  con respecto a los hombres?
 	
 	indg.select(sum("ingreso_laboral")).show
@@ -480,3 +473,5 @@ De las personas indigenas ¿Es posible que hayan sido las mujeres las mas que me
 	|2018|      10.0|      4.0|
 	|2019|      11.0|      5.0|
 	+----+----------+---------+
+
+	

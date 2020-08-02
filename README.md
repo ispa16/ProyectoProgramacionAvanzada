@@ -3,6 +3,8 @@
 <p align="center">
   <img src=https://www.utpl.edu.ec/manual_imagen/images/institucional/UTPL-INSTITUCIONAL-color.jpg />
 </p>
+  <img src=https://www.utpl.edu.ec/manual_imagen/images/institucional/UTPL-INSTITUCIONAL-color.jpg />
+
 <div align="center">
 <h2>Integrantes</h2>
 Santiago David García Jaén<br>

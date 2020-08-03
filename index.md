@@ -18,15 +18,11 @@ Habiendo establecido esto, los análisis de esta presentación se centran en la 
 
 ## ¿Cuál es el porcentaje de indígenas (personas de población nativa u originaria del país) con respecto al porcentaje total de personas a las que se les tomó la encuesta?
 
-	val indg = data.where($"etnia" === "1 - Indígena")
-	print(f"${(indg.count * 100)/data.count.toDouble}%.2f%% de Indígenas encuestados")
-	
-<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593396440436_674179589?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+	12.2%
 
 Ahora sabemos que las personas indigenas son unos de los grupos a los que mas se les a relizado la encuesta, es necesario determinar cual es el el estado laboral de los índigenas, con el fin de ir obteniendo una aproximacion de como se ha sucitado las condiciones laborales a lo largo de estos años.
 ## ¿Cuál es la clasificación de indígenas con respecto a sus condición laboral (condicion_actividad)?
 
-> print(f"${(indg.where($"condicion_actividad" === "1 - Empleo Adecuado/Pleno").count * 100)/indg.count.toDouble}%.2f%% Empleo Adecuado\n${(indg.where($"condicion_actividad" === "2 - Subempleo por insuficiencia de tiempo de trabajo").count * 100)/indg.count.toDouble}%.2f%% Subempleo por insuficiencia de trabajo\n${(indg.where($"condicion_actividad" === "4 - Otro empleo no pleno").count * 100)/indg.count.toDouble}%.2f%% Otro empleo no pleno\n${(indg.where($"condicion_actividad" === "5 - Empleo no remunerado").count * 100)/indg.count.toDouble}%.2f%% Empleo no remunerado\n${(indg.where($"condicion_actividad" === "6 - Empleo no clasificado").count * 100)/indg.count.toDouble}%.2f%% Empleo no clasificado\n${(indg.where($"condicion_actividad" === "7 - Desempleo abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.where($"condicion_actividad" === "8 - Desempleo oculto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Oculto")
 
 <iframe src="https://45108585d0e1.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1596417251267_953268245?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
@@ -40,7 +36,6 @@ Se puede establecer mediante información del INEC que en la encuesta EMENDU, el
 De esta manera podemos establecer que la información más concreta para este análisis son aquellos indigenas que hallan sido catalogados con "desempleo abierto", ya que esta hace referencia a personas que han estado en la búsqueda de empleo durante una semana antes de realizarle dicha encuesta y no han logrado encontrarlo, la pregunta estaría mejor formulada de la siguiente manera:
 ### _¿Cuál es la cantidad de indígenas que se encuentran con desempleo abierto (búsqueda activamente de empleo durante el mes anterior a la encuesta sin éxito)?_
 
-	indg.where($"condicion_actividad" === "7 - Desempleo abierto").count
 
 915
 
@@ -50,16 +45,12 @@ Las personas con desempleo abierto son 915, esto daria a interpretar que las per
 Para analizar si existe alguna influencia que denote a la educación como parte fundamental de encontrar una empleo más factiblemente. Nos podemos preguntar:
 ## ¿Cuál es el nivel de educación que tienen los indígenas desempleados abiertamente?
 
-	val indgEduc =  indg.where($"condicion_actividad" === "7 - Desempleo abierto") 
-	z.show(indgEduc.groupBy("nivel_de_instruccion").count().as("cantidad").sort(desc("count")))
 	
 <iframe src="https://45108585d0e1.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 Se puede denotar que probablemente si existe una relación inversamente proporcional entre la educación y la tasa de desempleo, las estadísticas nos presentan que la educación aparentemente si ha incidido, esto debido a que se puede ver que las personas con mayor nivel de instrucción son las que representan la menor cantidad de desempleados indígenas.
 ## ¿Puede una persona indígena con desempleo abierto, tener un ingreso laboral diferente de 0? ¿No es esto contradictorio? Compruebelo.
 
-	z.show(indgEduc.where($"ingreso_laboral" > 0))
-	indgEduc.where($"ingreso_laboral" > 0).count
 
 51
 
@@ -81,9 +72,6 @@ _Se puede considerar como verdadera esta sentencia ya que, podemos deducir que e
 Ahora que determinamos a la educación como un factor bastnate influyente con oportunidades de trabajo en una población , se podria buscar si realmente una persona con el nivel mas alto de estudio posee un ingreso laboral mas alto que el triple del valor del salario básico (380) y si su valor mínimo de entrada es 0, es decir se encuentra desempleado, para ello se busca determinar:
 ## ¿Cuál es el valor máximo y mínimo que gana un indígena que tiene el nivel mas alto de estudios (Post-grado)?
 
-val indgEducPost = (indg.where($"nivel_de_instruccion" === "10 - Post-grado"))
-z.show(indgEducPost.select("ingreso_laboral").summary("max", "min"))
-
 <iframe src="https://45108585d0e1.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403740005_476166868?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 
@@ -91,12 +79,10 @@ z.show(indgEducPost.select("ingreso_laboral").summary("max", "min"))
 ### Algoritmo 1 (Desviación Estándar)
 
 #### Indígenas
-z.show(indgPostSinAcotas.select("ingreso_laboral").summary())
 
 <iframe src="https://45108585d0e1.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403828111_1148094077?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 #### Mestizos
-z.show(meztPostSinAcotas.select("ingreso_laboral").summary())
 
 <iframe src="https://45108585d0e1.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595212377630_1195086984?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
@@ -104,11 +90,9 @@ z.show(meztPostSinAcotas.select("ingreso_laboral").summary())
 ### Algoritmo 2 (BoxPlots)
 
 #### Indígenas
-z.show(indgSinAcotasIQR.select("ingreso_laboral").summary())
 <iframe src="https://45108585d0e1.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595214146401_-1368361993?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 #### Mestizos
-z.show(meztSinAcotasIQR.select("ingreso_laboral").summary())
 <iframe src="https://45108585d0e1.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595214507731_-984269933?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ### Respuesta:
@@ -133,18 +117,14 @@ Vease:
 
 ## ¿Qué porcentaje del salario máximo de un meztizo (Post-grado), recibe un indígena con esas mismas características?
 
-print(f"Recibe el ${(4264 * 100)/5620.toDouble}%.2f%% del salario máximo de un meztizo con similares caracteristicas\n")
 
 75.87% 
 ## ¿Es posible que con el tiempo los niveles de empleo adecuado y desempleo en los indígenas hayan aumentado con respecto a los demás grupos poblacionales? ¿Es posible demostrar como ha variado su condición laboral con el paso de los años?
 
-	z.show(indg.stat.crosstab("condicion_actividad", "anio").orderBy("condicion_actividad_anio"))
 
 <iframe src="https://45108585d0e1.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595214726046_737558043?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ## ¿Qué hay con respecto a las personas que no son indígenas? ¿Se puede observar una similaridad en cuanto a la estadística?
-
-	z.show(noIndg.stat.crosstab("condicion_actividad", "anio").orderBy("condicion_actividad_anio"))
 
 <iframe src="https://45108585d0e1.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595214864199_-373488132?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
@@ -153,7 +133,6 @@ Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento 
 
 ## De las personas indígenas ¿Es posible que hayan sido las mujeres las mas que menor valor de ingreso han obtenido? ¿Existe alguna diferencia significativa entre el porcentaje de ingresos laborales que generaron las mujeres en  con respecto a los hombres?
 
-	z.show(indg.groupBy("anio").pivot("genero").agg( round((sum("ingreso_laboral")*100)/13925210) ).orderBy("anio"))
 	
 <iframe src="https://45108585d0e1.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595215133794_-295891300?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 

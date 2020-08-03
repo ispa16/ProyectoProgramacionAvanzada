@@ -300,12 +300,6 @@ vemos que el numero de personas con educacion en los diferentes niveles tiende a
 ## conclusion 
 Los indigenas han mejorado su condicion social a lo largo de los ultimos años, las campanas de alfabetizacion en comunidades rurales, la inversion en escuelas en areas rurales y el continuo crecimiento de la emigracion a las zonas urbanas  han logrado que la brecha entre indigenas y mestizos se acorte sobre todo a la hora en la que las empresas se desacen de sus trabajadores donde los datos demuestran que no existe preferencia hacia un grupo en particular, sim embargo aun existe una brecha salarial que debe ser superada y que es una muestra de que la discriminacion aun existe hacia estos grupos en el ambito laboral
 
-## A considerar
-
-* Todas las funciones utilizadas para la realizacion del presente EDA se encuentran detalladas en la siguiente direccion: https://github.com/ispa16/ProyectoProgramacionAvanzada/wiki/Funciones-a-utilizar
-* Algunas graficas pueden dar el error "No data to show", considere abrir la pestana "settings" y colocar la key y los values segun corresponda
-
-
 
 
 

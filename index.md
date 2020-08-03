@@ -14,21 +14,21 @@ Habiendo establecido esto, los análisis de esta presentación se centran en la 
 
 	z.show(data.groupBy("etnia").count().sort(desc("count")))
 	
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1596412783886_-307223380?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1596412783886_-307223380?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ## ¿Cuál es el porcentaje de indígenas (personas de población nativa u originaria del país) con respecto al porcentaje total de personas a las que se les tomó la encuesta?
 
 	val indg = data.where($"etnia" === "1 - Indígena")
 	print(f"${(indg.count * 100)/data.count.toDouble}%.2f%% de Indígenas encuestados")
 	
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593396440436_674179589?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593396440436_674179589?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 Ahora sabemos que las personas indigenas son unos de los grupos a los que mas se les a relizado la encuesta, es necesario determinar cual es el el estado laboral de los índigenas, con el fin de ir obteniendo una aproximacion de como se ha sucitado las condiciones laborales a lo largo de estos años.
 ## ¿Cuál es la clasificación de indígenas con respecto a sus condición laboral (condicion_actividad)?
 
 > print(f"${(indg.where($"condicion_actividad" === "1 - Empleo Adecuado/Pleno").count * 100)/indg.count.toDouble}%.2f%% Empleo Adecuado\n${(indg.where($"condicion_actividad" === "2 - Subempleo por insuficiencia de tiempo de trabajo").count * 100)/indg.count.toDouble}%.2f%% Subempleo por insuficiencia de trabajo\n${(indg.where($"condicion_actividad" === "4 - Otro empleo no pleno").count * 100)/indg.count.toDouble}%.2f%% Otro empleo no pleno\n${(indg.where($"condicion_actividad" === "5 - Empleo no remunerado").count * 100)/indg.count.toDouble}%.2f%% Empleo no remunerado\n${(indg.where($"condicion_actividad" === "6 - Empleo no clasificado").count * 100)/indg.count.toDouble}%.2f%% Empleo no clasificado\n${(indg.where($"condicion_actividad" === "7 - Desempleo abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.where($"condicion_actividad" === "8 - Desempleo oculto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Oculto")
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1596417251267_953268245?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1596417251267_953268245?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ## ¿Cuál es la cantidad de indígenas que están con desempleo?
 Se puede establecer mediante información del INEC que en la encuesta EMENDU, el desempleo se divide en dos partes, una denominada desempleo abierto y otra denominada desempleo oculto, en este analisis de datos, no se toma en cuenta a las personas con desempleo oculto, como parte de la estadística, esto debido a que las personas caracterizadas por el desempleo oculto, son aquellas que no han obtenido trabajo, pero por diversas razones que son competentes a cada individuo más no, a una socialización económica:
@@ -42,7 +42,7 @@ De esta manera podemos establecer que la información más concreta para este an
 
 	indg.where($"condicion_actividad" === "7 - Desempleo abierto").count
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593402869491_-1475419715?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 Las personas con desempleo abierto son 915, esto daria a interpretar que las personas indígenas no sufren en su mayor parte de desempleo. Puede que la educación haya sido un valor influyente en este resultado, podemos establecer la información que denota de Rodriguez (2018) en su artículo, construir la interculturalidad. Políticas educativas, diversidad cultural y desigualdad en Ecuador: 
 	La unidad educativa Tránsito Amaguaña, situada al interior del Mercado Mayorista, en el sur de Quito, acoge alumnos de nacionalidad indígena kichwa. La situación de pobreza en las comunidades, donde las distintas reformas agrarias no han llevado a un reparto equitativo de la tierra ni han logrado detener el proceso de empobrecimiento de la población indígena en el campo...Procedentes en su mayoría de comunidades situadas en la región andina, los niños que asisten a esta escuela forman parte del proyecto migratorio de sus progenitores, quienes trabajan en el Mercado como cargadores y vendedores de alimentos.
@@ -61,7 +61,7 @@ Se puede denotar que probablemente si existe una relación inversamente proporci
 	z.show(indgEduc.where($"ingreso_laboral" > 0))
 	indgEduc.where($"ingreso_laboral" > 0).count
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403423685_958489695?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+51
 
 ### ¿Cómo es posible que una persona con un "desempleo abierto" tenga un ingreso laboral que no sea 0?
 Se puede considerar varios posibles errores:
@@ -84,7 +84,7 @@ Ahora que determinamos a la educación como un factor bastnate influyente con op
 val indgEducPost = (indg.where($"nivel_de_instruccion" === "10 - Post-grado"))
 z.show(indgEducPost.select("ingreso_laboral").summary("max", "min"))
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403740005_476166868?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403740005_476166868?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 
 ## ¿Existe una diferencia de salario que un indigena(post-grado) recibe de ingreso laboral promedio, con respecto al valor de ingreso laboral promedio de un ecuatoriano meztizo(post-grado)?
@@ -93,23 +93,23 @@ z.show(indgEducPost.select("ingreso_laboral").summary("max", "min"))
 #### Indígenas
 z.show(indgPostSinAcotas.select("ingreso_laboral").summary())
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595212377630_1195086984?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595212377630_1195086984?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 #### Mestizos
 z.show(meztPostSinAcotas.select("ingreso_laboral").summary())
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595213543292_-122215092?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595213543292_-122215092?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 
 ### Algoritmo 2 (BoxPlots)
 
 #### Indígenas
 z.show(indgSinAcotasIQR.select("ingreso_laboral").summary())
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595214146401_-1368361993?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595214146401_-1368361993?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 #### Mestizos
 z.show(meztSinAcotasIQR.select("ingreso_laboral").summary())
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595214507731_-984269933?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595214507731_-984269933?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ### Respuesta:
 Considerando los resultados de los 2 algoritmos, se puede deducir que en efecto, existe una diferencia entre lo que gana un indigena (post-grado) en promedio,
@@ -140,13 +140,13 @@ print(f"Recibe el ${(4264 * 100)/5620.toDouble}%.2f%% del salario máximo de un 
 
 	z.show(indg.stat.crosstab("condicion_actividad", "anio").orderBy("condicion_actividad_anio"))
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595214726046_737558043?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595214726046_737558043?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ## ¿Qué hay con respecto a las personas que no son indígenas? ¿Se puede observar una similaridad en cuanto a la estadística?
 
 	z.show(noIndg.stat.crosstab("condicion_actividad", "anio").orderBy("condicion_actividad_anio"))
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595214864199_-373488132?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595214864199_-373488132?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ### Respuesta
 Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento hacia los indígenas, ya que todos los grupos poblacionales han demostrado que han tendido a la baja con respecto al empleo adecuado en el ecuador, además de que la tasa de desempleo (oculto y abierto) a tendido también a la baja en todos los grupos.
@@ -155,7 +155,7 @@ Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento 
 
 	z.show(indg.groupBy("anio").pivot("genero").agg( round((sum("ingreso_laboral")*100)/13925210) ).orderBy("anio"))
 	
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595215133794_-295891300?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595215133794_-295891300?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 
 
@@ -178,11 +178,11 @@ Generalmente, se tiene la creencia que los indígenas viven en su mayoria en el 
 
 #### Indígenas
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593322854991_-1554281548?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593322854991_-1554281548?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 #### Mestizos
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595216100839_233864124?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595216100839_233864124?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 En las ultimas decadas los indigenas han empezado a migrar a las ciudades en busca de mejores oportunidades, sim embargo no todos han encontrado estas oportunidades ya que en la grafica vemos que existe un mayor deseempleo para los indigenas en el area urbana 
 en contraste en los mestizos tambien existe un mayor indice de desempleo en el area urbana ya que la mayoria no suele migrar por lo que se quedan buscando oportunidades en su ciudad natal
@@ -198,11 +198,11 @@ Para estas consultas usaremos las siguientes columnas:
 
 ### Indígenas
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593387785797_-1450884432?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593387785797_-1450884432?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ### Mestizos
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595218020555_-89225038?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595218020555_-89225038?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 podemos observar la media de ingresos por cada grupo de ocupacion, en general vemos que en los mismos campos los indigenas ganan menos que los mestizos esto puede ser debido a que los mestizos pueden ocupar cagos mas altos en los mismos campos, mientras que a los indigenas los relegan a cargos bajos y no suelen conseguir ascensos, esto es otro indicio de discriminacion
 
@@ -212,11 +212,11 @@ Ahora ya sabemos que los mestizos ganan mas que los indigenas, los indigenas se 
 
 ### Indígenas
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593387883901_-158266681?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593387883901_-158266681?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ### Mestizos
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595218115482_-1659906633?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595218115482_-1659906633?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 En esta consulta podemos confirmar que los indigenas ganan menos que los mestizos en el area urbana y rural, por lo que seguimos viendo que la brecha salarial sigue existiendo independientemente del area urbana o rural 
 
@@ -229,11 +229,11 @@ Ya confirmamos que los indigenas ganan menos independientemente del sector en el
 
 ### Indígenas
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593387840394_1005999665?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593387840394_1005999665?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ### Mestizos
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595218174856_-787782822?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595218174856_-787782822?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 finalmente podemos comprobar que pese a tener el mismo grado de estudio en promedio los mestizos ganan mas dinero que los indigenas en todas las categorias de nivel de estudio 
 
 #### Conclusión
@@ -255,11 +255,11 @@ Ahora averiguaremos como es porcentualmente el desempleo en ambos grupos etnicos
 
 ### Indígenas
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593387736565_763957577?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593387736565_763957577?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ### Mestizos
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595217698804_2304993?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595217698804_2304993?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 Podemos apreciar que el porcentaje de deseempleo sigue una tendencia similar en ambos grupos,  vemos que en la categoria de educacion superior universitaria el deseempleo es mucho mayor en los mestizos por lo que concluimos que los mestizos tienden a ir mas a la universidad a diferencia de los indigenas por lo mismo que el indice es mayor para los mestizos ya que no existen oportunidades para todos los graduados,  otra difrencia notable es en la primaria el indice es considerabemente mayor en los indigenas ya que a diferencia de los mestizos, los indigenas suelen abandonar su eduacion en este nivel debido al poco interes que tienen los padres en la educacion de sus hijos o a la falta de recursos para esta
 
@@ -274,11 +274,11 @@ Generalmente se tiene la creencia de que los indigenas son mas apegados a su fam
 
 ### Indígenas
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593387739358_1407714160?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593387739358_1407714160?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ### Mestizos
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595218552958_-960063640?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595218552958_-960063640?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 Los resultados son muy similares por lo que concluimos que en los dos grupos etnicos existe el sentido de responsabilidad en la gentee casada para insistir en la busqueda de un trabajo, mientras que la gente soltera no siente esta responsabilidad y no insiste en la busqueda de un trabajo, un dato a resaltar es que en ambos casos las personas viudas, son las que tienen un menor indice de deseempleo
 
@@ -293,11 +293,11 @@ Otro factor de discriminacion es el genero, historicamente las mujeres tambien h
 
 ### Indígenas
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595208353963_1179834?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595208353963_1179834?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ### Mestizos
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595219113944_-987833382?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595219113944_-987833382?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 En las graficas podemos observar que el  año con mayor indice deseempleo es el 2017  año en el que la economia del Ecuador crecio un 3%, por lo que vemos en el 2018 una notoria mejoria en el indice de deseempleo
 Obsevamos que en el sector indigena, las mujeres tienen el indice de deseemplo mas bajo en todos los años a diferencia de las mujeres mestizas que tienen el indice de deseempleo mas alto en todos los años, esto se explica ya que durante los ultimos 5 años su presencia a nivel de dirigencia y representatividad en distintos movimientos sociales se incremento, lo que nos da a entender que las mujeres indigenas buscan roles mas importantes, mientras que las mujeres mestizas han actuado de forma mas discreta 
@@ -315,11 +315,11 @@ Para estas consultas nos centraremos en las siguientes columnas:
 
 #### Indígenas
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595208360169_1055564739?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595208360169_1055564739?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 #### Mestizos
 
-<iframe src="https://2857362d5a51.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595209269236_-344372056?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+<iframe src="https://9a1e0372eaca.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1595209269236_-344372056?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 Se observa que el número de personas con educación en los diferentes niveles tiende a variar mucho en los indígenas, mientras que en los mestizos el número no varia esta diferencia la apreciamos sobre todo en la primaria donde el numero de personas con este grado de educacion ha disminuido contrastandolo con la consulta hecha anteriormente que nos da el alto indice de deseempleo en los indigenas con educacion primaria, por lo que concluimos que los adultos indigenas han tomado conciencia sobre esto e instan a sus hijos a acabar sus estudios por lo que el numero ha disminuido 
 

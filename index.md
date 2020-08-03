@@ -120,7 +120,7 @@ Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento 
 
 
 pruebas 
-<iframe src="" style="width: 500px; height: 130px; border: 0px"></iframe>
+<iframe src="http://39f294dce422.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1596412783886_-307223380?asIframe" style="width: 500px; height: 130px; border: 0px"></iframe>
 
 
 _________________________________________________________________________________________________________

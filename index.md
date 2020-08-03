@@ -1,6 +1,6 @@
 # Resultados
 ## Grupos poblacionales del Ecuador.
-En el año 2008 el Ecuador fue reconocido como un estado intercultural y pluricultural (Díaz & Atúnez, 2016), asi lo estableció la constitución de Montecristi desde el primer articulo: "El Ecuador es un Estado constitucional de derechos y justicia, social, democrático, soberano, independiente, unitario, intercultural, plurinacional y laico. Se organiza en forma de república y se gobierna de manera descentralizada. La soberanía radica en el pueblo, cuya voluntad es el fundamento de la autoridad, y se ejerce a través de los órganos del poder público y de las formas de participación directa previstas en la Constitución". (art.1, Constitución de la República del Ecuador)
+En el año 2008, Ecuador fue reconocido como un estado intercultural y pluricultural (Díaz & Atúnez, 2016), asi lo estableció la constitución de Montecristi desde el primer articulo: "El Ecuador es un Estado constitucional de derechos y justicia, social, democrático, soberano, independiente, unitario, intercultural, plurinacional y laico. Se organiza en forma de república y se gobierna de manera descentralizada. La soberanía radica en el pueblo, cuya voluntad es el fundamento de la autoridad, y se ejerce a través de los órganos del poder público y de las formas de participación directa previstas en la Constitución". (art.1, Constitución de la República del Ecuador)
 
 La interculturalidad que expresa la constitución vigente establece que, las definiciones sociales como idiomas nativos, costumbres, jurisdicción, entre otros, de los indígenas deben ser respetados por todos los pueblos de nacionalidad ecuatoriana como los blancos y meztizos, mantiendo asi como una correcta convivencia bajo el respeto mutuo sin discriminación y bajo el cumplimiento de sus derechos.  
 > Art.6, Constitución de la República del Ecuador), Todas las ecuatorianas y los ecuatorianos son ciudadanos y gozarán de los derechos establecidos en la Constitución. La nacionalidad ecuatoriana es el vínculo jurídico político de las personas con el Estado, sin perjuicio de su pertenencia a alguna de las nacionalidades indígenas que coexisten en el Ecuador.
@@ -19,6 +19,7 @@ Habiendo establecido esto, los análisis de esta presentación se centran en la 
 
 	val indg = data.where($"etnia" === "1 - Indígena")
 	print(f"${(indg.count * 100)/data.count.toDouble}%.2f%% de Indígenas encuestados")
+	
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 Ahora sabemos que las personas indigenas son unos de los grupos a los que mas se les a relizado la encuesta, es necesario determinar cual es el el estado laboral de los índigenas, con el fin de ir obteniendo una aproximacion de como se ha sucitado las condiciones laborales a lo largo de estos años.
@@ -27,7 +28,7 @@ Ahora sabemos que las personas indigenas son unos de los grupos a los que mas se
 > print(f"${(indg.where($"condicion_actividad" === "1 - Empleo Adecuado/Pleno").count * 100)/indg.count.toDouble}%.2f%% Empleo Adecuado\n${(indg.where($"condicion_actividad" === "2 - Subempleo por insuficiencia de tiempo de trabajo").count * 100)/indg.count.toDouble}%.2f%% Subempleo por insuficiencia de trabajo\n${(indg.where($"condicion_actividad" === "4 - Otro empleo no pleno").count * 100)/indg.count.toDouble}%.2f%% Otro empleo no pleno\n${(indg.where($"condicion_actividad" === "5 - Empleo no remunerado").count * 100)/indg.count.toDouble}%.2f%% Empleo no remunerado\n${(indg.where($"condicion_actividad" === "6 - Empleo no clasificado").count * 100)/indg.count.toDouble}%.2f%% Empleo no clasificado\n${(indg.where($"condicion_actividad" === "7 - Desempleo abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.where($"condicion_actividad" === "8 - Desempleo oculto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Oculto")
 
 ## ¿Cuál es la cantidad de indígenas que están con desempleo?
-Se puede establecer mediante información del INEC que en la encuesta EMENDU, el desempleo se divide en dos partes, una denominada desempleo abierto y otra denominada desempleo oculto, en este analisis de datos, no se toma en cuenta a las personas con desempleo oculto para establecer dicho analisis, esto debido a que las personas caracterizadas por este, son aquellas que no han obtenido trabajo, pero por diversas razones que son competentes a cada individuo mas no a una socailizacion economica:
+Se puede establecer mediante información del INEC que en la encuesta EMENDU, el desempleo se divide en dos partes, una denominada desempleo abierto y otra denominada desempleo oculto, en este analisis de datos, no se toma en cuenta a las personas con desempleo oculto, como parte de la estadística, esto debido a que las personas caracterizadas por el desempleo oculto, son aquellas que no han obtenido trabajo, pero por diversas razones que son competentes a cada individuo más no, a una socialización económica:
 
 > **Desempleo oculto:** Personas sin empleo, que no estuvieron empleados la semana pasada, que no buscaron trabajo y no hicieron gestiones concretas para conseguir empleo o para establecer algún negocio en las cuatro semanas por alguna de las siguientes razones: tiene un trabajo esporádico u ocasional; tiene un trabajo para empezar inmediatamente; espera respuesta por una gestión en una empresa o negocio propio; espera respuesta de un empleador o de otras gestiones efectuadas para conseguir empleo; espera cosecha o temporada de trabajo o piensa que no le darán trabajo o se cansó de buscar.
 
@@ -40,7 +41,7 @@ De esta manera podemos establecer que la información mas concreta para este an�
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-Las personas con desempleo abierto son 915, esto daria a interpretar que las personas indigenas no sufren en su mayor parte de desempleo. Puede que la educacion haya sido un valor influyente en este resultado, podemos establecer la informacion que denota de Rodriguez (2018) en su artículo construir la interculturalidad. Políticas educativas, diversidad cultural y desigualdad en Ecuador: 
+Las personas con desempleo abierto son 915, esto daria a interpretar que las personas indígenas no sufren en su mayor parte de desempleo. Puede que la educación haya sido un valor influyente en este resultado, podemos establecer la información que denota de Rodriguez (2018) en su artículo, construir la interculturalidad. Políticas educativas, diversidad cultural y desigualdad en Ecuador: 
 	La unidad educativa Tránsito Amaguaña, situada al interior del Mercado Mayorista, en el sur de Quito, acoge alumnos de nacionalidad indígena kichwa. La situación de pobreza en las comunidades, donde las distintas reformas agrarias no han llevado a un reparto equitativo de la tierra ni han logrado detener el proceso de empobrecimiento de la población indígena en el campo...Procedentes en su mayoría de comunidades situadas en la región andina, los niños que asisten a esta escuela forman parte del proyecto migratorio de sus progenitores, quienes trabajan en el Mercado como cargadores y vendedores de alimentos.
 
 Para analizar si existe alguna influencia que denote a la educación como parte fundamental de encontrar una empleo más factiblemente. Nos podemos preguntar:
@@ -50,7 +51,8 @@ Para analizar si existe alguna influencia que denote a la educación como parte 
 	z.show(indgEduc.groupBy("nivel_de_instruccion").count().as("cantidad").sort(desc("count")))
 	
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
-Se puede denotar que no es una relacion proporcional, las estadísticas nos presentan que la educación aparentemente si ha incidido, esto debido a que se puede ver que las personas con mayor nivel de instruccion son las que representan la menor cantidad de desempleados indígenas.
+
+Se puede denotar que probablemente si existe una relación inversamente proporcional entre la educación y la tasa de desempleo, las estadísticas nos presentan que la educación aparentemente si ha incidido, esto debido a que se puede ver que las personas con mayor nivel de instrucción son las que representan la menor cantidad de desempleados indígenas.
 ## ¿Puede una persona indígena con desempleo abierto, tener un ingreso laboral diferente de 0? ¿No es esto contradictorio? Compruebelo.
 
 	z.show(indgEduc.where($"ingreso_laboral" > 0))
@@ -63,15 +65,19 @@ Se puede considerar varios posibles errores:
 
 * **Primero:** La sentencia este mal escrita o con un error, lo cual es posible, pero se descarta al usar otra herramienta para comprobar su veracidad (SQL) en el cual demuestra usando filtros que existen encuestados indigenas, con desempleo oculto que tienen un ingreso laboral mayor a 0.
 
-/////////////////////////////////////////
+indgEduc.createOrReplaceTempView("table2")
+val aux = spark.sql("""
+    SELECT count(*)
+    FROM table2 where ingreso_laboral > 0
+""")
 
 * **Segundo:** El archivo de origen vino con defectos, otra opcion posible, pero tambien descartada cuando leemos los significados de cada columna.
 
-_Posible Respuesta:_ La pagina web oficial de la EMENDU,  ofrece información acerca de que es el desempleo oculto y que considera el mismo. Siendo asi el significado de esta variable "Personas sin empleo, que no estuvieron empleados en la semana pasada y que buscaron trabajo e hicieron gestiones concretas para conseguir empleo o para establecer algún negocio en las cuatro semanas anteriores a la entrevista."
+_Posible Respuesta:_ La página web oficial de la EMENDU,  ofrece información acerca de a que se denomina desempleo oculto y que abarca el mismo. Siendo así el significado de esta variable "Personas sin empleo, que no estuvieron empleados en la semana pasada y que buscaron trabajo e hicieron gestiones concretas para conseguir empleo o para establecer algún negocio en las cuatro semanas anteriores a la entrevista."
 
 _Se puede considerar como verdadera esta sentencia ya que, podemos deducir que el ingreso laboral que decretaron estas personas en la encuesta pertenece al ingreso laboral que recibian una semana antes de la encuesta, cuando aun estaban empleados._
 
-Ahora que determinamos a la educacion como un factor 
+Ahora que determinamos a la educación como un factor bastnate influyente con oportunidades de trabajo en una población , se podria buscar si realmente una persona con el nivel mas alto de estudio posee un ingreso laboral mas alto que el triple del valor del salario básico (380) y si su valor mínimo de entrada es 0, es decir se encuentra desempleado, para ello se busca determinar:
 ## ¿Cuál es el valor máximo y mínimo que gana un indígena que tiene el nivel mas alto de estudios (Post-grado)?
 
 val indgEducPost = (indg.where($"nivel_de_instruccion" === "10 - Post-grado"))
@@ -79,13 +85,28 @@ z.show(indgEducPost.select("ingreso_laboral").summary("max", "min"))
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-## ¿Existe una diferencia de salario que un indigena(post-grado) recibe de ingreso laboral promedio, con respecto al valor de ingreso laboral promedio de un ecuatoriano meztizo(post-grado)?
 
-z.show(indgEducPost.select("ingreso_laboral").summary())
+## ¿Existe una diferencia de salario que un indigena(post-grado) recibe de ingreso laboral promedio, con respecto al valor de ingreso laboral promedio de un ecuatoriano meztizo(post-grado)?
+### Algoritmo 1 (Desviación Estándar)
+
+#### Indígenas
+z.show(indgPostSinAcotas.select("ingreso_laboral").summary())
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-Boxsplots rta
+#### Meztizos
+z.show(meztPostSinAcotas.select("ingreso_laboral").summary())
+
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+
+
+### Algoritmo 2 (BoxPlots)
+
+#### Indígenas
+z.show(indgSinAcotasIQR.select("ingreso_laboral").summary())
+
+#### Meztizos
+z.show(meztSinAcotasIQR.select("ingreso_laboral").summary())
 
 ### Respuesta:
 Considerando los resultados de los 2 algoritmos, se puede deducir que en efecto, existe una diferencia entre lo que gana un indigena (post-grado) en promedio,
@@ -107,14 +128,25 @@ indigena =  1291.5526315789473		meztizo = 1425.7911637173327
 	diferencia = 134.25
 
 
+## ¿Qué porcentaje del salario maximo de un meztizo (Post-grado), recibe un indígena con las mismas características?
+
+print(f"Recibe el ${(4264 * 100)/5620.toDouble}%.2f%% del salario maximo de un meztizo con similares caracteristicas\n")
+
+
 ## ¿Es posible que con el tiempo los niveles de empleo adecuado y desempleo en los indígenas hayan aumentado con respecto a los demas grupos poblacionales? ¿Es posible demostrar como ha variado su condicion laboral con el paso de los años?
 
+	z.show(indg.stat.crosstab("condicion_actividad", "anio").orderBy("condicion_actividad_anio"))
+
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ## ¿Qué hay con respecto a las personas que no son indígenas? ¿Se puede observar una similaridad en cuanto a la estadistica?
 
+	z.show(noIndg.stat.crosstab("condicion_actividad", "anio").orderBy("condicion_actividad_anio"))
+
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ### Respuesta
-Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento hacia los indigenas, ya que todos los grupos poblacionales han demostrado que han tendido a la baja con respecto al empleo adecuado en el ecuador, además de que la tasa de desempleo (oculto y abierto) a tendido a la baja en todos los grupos.
+Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento hacia los indígenas, ya que todos los grupos poblacionales han demostrado que han tendido a la baja con respecto al empleo adecuado en el ecuador, además de que la tasa de desempleo (oculto y abierto) a tendido a la baja en todos los grupos.
 
 ## De las personas indígenas ¿Es posible que hayan sido las mujeres las mas que menor valor de ingreso han obtenido? ¿Existe alguna diferencia significativa entre el porcentaje de ingresos laborales que generaron las mujeres en  con respecto a los hombres?
 
@@ -125,22 +157,20 @@ Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento 
 
 
 
-## Variables a comparar
+## Panorama histórico vs panorama actual de los indígenas
 
-En el Ecuador historicamente los indigenas han sido el grupo mas vulnerable desde la conquista de los espanoles,desde entonces este grupo etnico ha sido discriminado por los demas grupos, relegandolos a una posicion desfavorable con respecto a otros grupos etnicos, al otro lado de la balanza tenemos a los mestizos quienes en la actualidad son el grupo etnico comun en el pais y muchos lo consideran como el privilegiado ya que en su mayoria se encuentra ubicados en areas centricas de las provincias mientras que los indigenas se encuentran relegados a las areas rurales 
+En el Ecuador historicamente los indígenas han sido catalogados como uno de los grupos mas vulnerable desde la conquista de los españoles, desde entonces este grupo étnico ha sido discriminado, al otro lado de la balanza tenemos a los mestizos quienes en la actualidad son el grupo etnico comun en el pais y muchos lo consideran como el privilegiado ya que en su mayoria se encuentra ubicados en areas centricas de las provincias lo que se los pfrece gran ventaja economica, mientras que los indigenas se encuentran relegados a las areas rurales 
 
-Actualmente existe la creencia de que estas diferencias ya quedaron en el pasado, los ultimos gobiernos han impulsado distintas campanas con este proposito como es la del buen vivir (sumak kawsay), tambien se han hecho muchas campanas de alfabetizacion orientados para estos sectores, sumado a esto tenemos tambien tenemos las distintas campanas de informacion del gobierno nacional que dan a entender que esta problematica social ya quedo en el pasado, por lo que buscaremos datos en ambos grupos sociales para despues compararlos y llegar a una conclusion 
+Actualmente existe la creencia de que estas diferencias ya quedaron en el pasado, los ultimos gobiernos del Ecuador han impulsado distintas campañas con este propósito como es la del Buen vivir (Sumak Kawsay), de la misma manera también se han hecho muchas campañas de alfabetización, orientados para estos sectores, sumado a esto tenemos las distintas campañas de información del gobierno nacional que dan a entender que esta problemática social ha sido resuelta, por lo que buscaremos datos en ambos grupos sociales para despues compararlos y llegar a una conclusion lo mas acertada posible. 
 
+Una de las formas en las que se muestra la discrimanacion en el dia a dia es a la hora en la que las empresas presinden de sus empleados por lo que un indice de deseempleo mayor en los indigenas seria una indicio de racismo.
+## Porcentaje de desempleo indígena en el área urbana y rural
 
-Una de las formas en las que se muestra la discrimanacion en el dia a dia es a la hora en la que las empresas presinden de sus empleados por lo que un indice de deseempleo mayor en los indigenas seria una indicio de racismo
+Para esta pregunta nos centraremos en las siguientes columnas:
 
+* **area:** Sector o área donde habita la persona (rural o urbana)
+* **condicion_actividad:** Condición laboral de la persona, es decir si se encuentra empleado o no
 
-## Porcentaje de desempleo indigena en el area urbana y rural
-
-Para estas consultas nos centraremos en las siguientes columnas:
-
-* area: La columna describe el area donde se encuentra viviendo la persona (rural o urbana)
-* condicion_activada: La columna describe como estasu condicion laboral actualmente es decir si se encuentra empleado o no
 Generalmente se tiene la creencia que los indigenas viven en su mayoria en el area rural, mientras que los mestizos en el area urbana, por lo que el deseempleo deberia proporcional a esto 
 
 indigenas
@@ -208,7 +238,7 @@ mestizos
 
 finalmente podemos comprobar que pese a tener el mismo grado de estudio en promedio los mestizos ganan mas dinero que los indigenas en todas las categorias de nivel de estudio 
 
-#### conclusion
+#### Conclusión
 
 En estas consultas comprobamos que existe una brecha salarial entre indigenas y mestizos que es considerable y en la que no incide ni el area en el que estan ubicados ni su nivel de estudio, ademas sabemos que los indigenas que se desempenan en los mismos grupos de ocupacion ganan menos que los mestizos, con esto podemos confirmar que existe descriminacion contra los indigenas al momento de remunerados o al momento de ser ascendidos
 
@@ -275,7 +305,7 @@ mestizos
 En las graficas podemos observar que el  año con mayor indice deseempleo es el 2017  año en el que la economia del Ecuador crecio un 3%, por lo que vemos en el 2018 una notoria mejoria en el indice de deseempleo
 Obsevamos que en el sector indigena, las mujeres tienen el indice de deseemplo mas bajo en todos los años a diferencia de las mujeres mestizas que tienen el indice de deseempleo mas alto en todos los años, esto se explica ya que durante los ultimos 5 años su presencia a nivel de dirigencia y representatividad en distintos movimientos sociales se incremento, lo que nos da a entender que las mujeres indigenas buscan roles mas importantes, mientras que las mujeres mestizas han actuado de forma mas discreta 
 
-#### Conclusion
+#### Conclusión
 El indice de deseempleo entre ambos grupos sociales es muy similar, por lo que concluimos que no existe discriminacion hacia los indigenas en el momento en que se realizan los despidos, destacando notoriamente a las mujeres indigenas cuyos indices de deseempleo son los mas bajos  y que mientras el deseempleo aumento en el año 2017, en las mujeres indigenas la tendencia siguio hacia un menor indice de desempleo 
 
 ## Evolucion del nivel de instruccion indigena en los años
@@ -295,9 +325,9 @@ mestizos
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-vemos que el numero de personas con educacion en los diferentes niveles tiende a variar mucho en los indigenas mientras que en los mestizos el numero  no varia esta diferencia la apreciamos sobre todo en la primaria donde el numero de personas con este grado de educacion ha disminuido contrastandolo con la consulta hecha anteriormente que nos da el alto indice de deseempleo en los indigenas con educacion primaria, por lo que concluimos que los adultos indigenas han tomado conciencia sobre esto e instan a sus hijos a acabar sus estudios por lo que el numero ha disminuido 
+Se observa que el número de personas con educación en los diferentes niveles tiende a variar mucho en los indígenas, mientras que en los mestizos el número no varia esta diferencia la apreciamos sobre todo en la primaria donde el numero de personas con este grado de educacion ha disminuido contrastandolo con la consulta hecha anteriormente que nos da el alto indice de deseempleo en los indigenas con educacion primaria, por lo que concluimos que los adultos indigenas han tomado conciencia sobre esto e instan a sus hijos a acabar sus estudios por lo que el numero ha disminuido 
 
-## conclusion 
+#### Conclusión 
 Los indigenas han mejorado su condicion social a lo largo de los ultimos años, las campanas de alfabetizacion en comunidades rurales, la inversion en escuelas en areas rurales y el continuo crecimiento de la emigracion a las zonas urbanas  han logrado que la brecha entre indigenas y mestizos se acorte sobre todo a la hora en la que las empresas se desacen de sus trabajadores donde los datos demuestran que no existe preferencia hacia un grupo en particular, sim embargo aun existe una brecha salarial que debe ser superada y que es una muestra de que la discriminacion aun existe hacia estos grupos en el ambito laboral
 
 
@@ -311,11 +341,11 @@ Constitución de la República del Ecuador, 20 de Octubre de 2008. https://educa
 
 Rodríguez, Maria (2018). _Construir la interculturalidad. Políticas educativas, diversidad cultural y desigualdad en Ecuador._ Recuperado de: http://scielo.senescyt.gob.ec/scielo.php?script=sci_arttext&pid=S1390-12492018000100217
 
-El telegrafo, 29 de Junio de 2019. Las mujeres indígenas ganan espacio y liderazgo. https://www.eltelegrafo.com.ec/noticias/politica/3/mujeres-indigenas-espacio-liderazgo-ecuador
+El Telégrafo, 29 de Junio de 2019. Las mujeres indígenas ganan espacio y liderazgo. https://www.eltelegrafo.com.ec/noticias/politica/3/mujeres-indigenas-espacio-liderazgo-ecuador
 
-El telegrafo, 03 de septiembre de 2019 . Ecuador invierte $ 10.250 millones en educación básica y bachillerato. www.eltelegrafo.com.ec. https://www.eltelegrafo.com.ec/noticias/sociedad/6/inversion-educacion-basica-bachillerato-ecuador
+El Telégrafo, 03 de septiembre de 2019 . Ecuador invierte $ 10.250 millones en educación básica y bachillerato. www.eltelegrafo.com.ec. https://www.eltelegrafo.com.ec/noticias/sociedad/6/inversion-educacion-basica-bachillerato-ecuador
 
-Banco Central del Ecuador, 29 de Marzo 2018.  Ecuador creció 3.0% en 2017 y confirma el dinamismo de su economía . https://www.bce.fin.ec/index.php/boletines-de-prensa-archivo/item/1080-ecuador-crecio-30-en-2017-y-confirma-el-dinamismo-de-su-economia#:~:text=La%20econom%C3%ADa%20ecuatoriana%20(PIB)%20en,en%20t%C3%A9rminos%20reales%20de%203.0%25.&text=El%20Gasto%20de%20Consumo%20Final%20del%20Gobierno%20General%2C%20en%20el,PIB%20en%200.56%20puntos%20porcentuales
+Banco Central del Ecuador, 29 de Marzo 2018.  Ecuador creció 3.0% en 2017 y confirma el dinamismo de su economía. https://www.bce.fin.ec/index.php/boletines-de-prensa-archivo/item/1080-ecuador-crecio-30-en-2017-y-confirma-el-dinamismo-de-su-economia#:~:text=La%20econom%C3%ADa%20ecuatoriana%20(PIB)%20en,en%20t%C3%A9rminos%20reales%20de%203.0%25.&text=El%20Gasto%20de%20Consumo%20Final%20del%20Gobierno%20General%2C%20en%20el,PIB%20en%200.56%20puntos%20porcentuales 
 
 
 

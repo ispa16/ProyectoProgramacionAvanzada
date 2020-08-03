@@ -1,5 +1,5 @@
 <h1 align="center"> Proyecto de Programación Avanzada </h1>
-<h1> me equivoque :c</h1>
+
 <p align="center">
   <img src=https://www.utpl.edu.ec/manual_imagen/images/institucional/UTPL-INSTITUCIONAL-color.jpg />
 </p>

@@ -119,8 +119,8 @@ Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento 
 
 
 
-pruebas 
-<iframe src="http://39f294dce422.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1596412783886_-307223380?asIframe" style="width: 500px; height: 130px; border: 0px"></iframe>
+pruebas2 
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 900px; height: 900px; border: 0px"></iframe>
 
 
 _________________________________________________________________________________________________________

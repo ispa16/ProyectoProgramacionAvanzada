@@ -3,7 +3,7 @@
 En el año 2008, Ecuador fue reconocido como un estado intercultural y pluricultural (Díaz & Atúnez, 2016), asi lo estableció la constitución de Montecristi desde el primer articulo: "El Ecuador es un Estado constitucional de derechos y justicia, social, democrático, soberano, independiente, unitario, intercultural, plurinacional y laico. Se organiza en forma de república y se gobierna de manera descentralizada. La soberanía radica en el pueblo, cuya voluntad es el fundamento de la autoridad, y se ejerce a través de los órganos del poder público y de las formas de participación directa previstas en la Constitución". (art.1, Constitución de la República del Ecuador)
 
 La interculturalidad que expresa la constitución vigente establece que, las definiciones sociales como idiomas nativos, costumbres, jurisdicción, entre otros, de los indígenas deben ser respetados por todos los pueblos de nacionalidad ecuatoriana como los blancos y meztizos, mantiendo asi como una correcta convivencia bajo el respeto mutuo sin discriminación y bajo el cumplimiento de sus derechos.  
-> Art.6, Constitución de la República del Ecuador), Todas las ecuatorianas y los ecuatorianos son ciudadanos y gozarán de los derechos establecidos en la Constitución. La nacionalidad ecuatoriana es el vínculo jurídico político de las personas con el Estado, sin perjuicio de su pertenencia a alguna de las nacionalidades indígenas que coexisten en el Ecuador.
+> Art.6, Todas las ecuatorianas y los ecuatorianos son ciudadanos y gozarán de los derechos establecidos en la Constitución. La nacionalidad ecuatoriana es el vínculo jurídico político de las personas con el Estado, sin perjuicio de su pertenencia a alguna de las nacionalidades indígenas que coexisten en el Ecuador.
 
 Y a su vez en el aritculo 11, de la Constitución de la República del Ecuador se establece que:
 
@@ -13,6 +13,7 @@ Habiendo establecido esto, los análisis de esta presentación se centran en la 
 ## Cantidad de Personas clasificadas por su etnia
 
 	z.show(data.groupBy("etnia").count().sort(desc("count")))
+	
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ## ¿Cuál es el porcentaje de indígenas (personas de población nativa u originaria del país) con respecto al porcentaje total de personas a las que se les tomó la encuesta?
@@ -34,7 +35,7 @@ Se puede establecer mediante información del INEC que en la encuesta EMENDU, el
 
 <a href="https://github.com/ispa16/ProyectoProgramacionAvanzada/wiki/Informaci%C3%B3n-General"> Para más información acerca de las definiciones de la encuesta EMENDU, visite este link</a>
 
-De esta manera podemos establecer que la información mas concreta para este análisis son aquellos indigenas que hallan sido catalogados con "desempleo abierto", ya que esta hace referencia a personas que han estado en la búsqueda de empleo durante una semana antes de realizarle dicha encuesta y no han logrado encontrarlo, la pregunta estaría mejor formulada de la siguiente manera:
+De esta manera podemos establecer que la información más concreta para este análisis son aquellos indigenas que hallan sido catalogados con "desempleo abierto", ya que esta hace referencia a personas que han estado en la búsqueda de empleo durante una semana antes de realizarle dicha encuesta y no han logrado encontrarlo, la pregunta estaría mejor formulada de la siguiente manera:
 ### _¿Cuál es la cantidad de indígenas que se encuentran con desempleo abierto (búsqueda activamente de empleo durante el mes anterior a la encuesta sin éxito)?_
 
 	indg.where($"condicion_actividad" === "7 - Desempleo abierto").count
@@ -65,11 +66,9 @@ Se puede considerar varios posibles errores:
 
 * **Primero:** La sentencia este mal escrita o con un error, lo cual es posible, pero se descarta al usar otra herramienta para comprobar su veracidad (SQL) en el cual demuestra usando filtros que existen encuestados indigenas, con desempleo oculto que tienen un ingreso laboral mayor a 0.
 
-indgEduc.createOrReplaceTempView("table2")
-val aux = spark.sql("""
-    SELECT count(*)
-    FROM table2 where ingreso_laboral > 0
-""")
+	indgEduc.createOrReplaceTempView("table2")
+	val aux = spark.sql(""" 
+		SELECT count(*) FROM table2 where ingreso_laboral > 0""")
 
 * **Segundo:** El archivo de origen vino con defectos, otra opcion posible, pero tambien descartada cuando leemos los significados de cada columna.
 
@@ -94,7 +93,7 @@ z.show(indgPostSinAcotas.select("ingreso_laboral").summary())
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-#### Meztizos
+#### Mestizos
 z.show(meztPostSinAcotas.select("ingreso_laboral").summary())
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
@@ -105,48 +104,48 @@ z.show(meztPostSinAcotas.select("ingreso_laboral").summary())
 #### Indígenas
 z.show(indgSinAcotasIQR.select("ingreso_laboral").summary())
 
-#### Meztizos
+#### Mestizos
 z.show(meztSinAcotasIQR.select("ingreso_laboral").summary())
 
 ### Respuesta:
 Considerando los resultados de los 2 algoritmos, se puede deducir que en efecto, existe una diferencia entre lo que gana un indigena (post-grado) en promedio,
-con lo que gana un meztizo de similares caracteristicas, pero realmente no es una diferencia significativa, es un valor encontrado en un rango entre 130 -170.
+con lo que gana un mestizo de similares caracteristicas, pero realmente no es una diferencia significativa, es un valor encontrado en un rango entre 130 -170.
 Vease:
 
 **Algoritmo 1 (salario promedio):**
 
-indigena =  1387.386075949367		meztizo = 1553.2442199775533
+**indígena** =  1387.386075949367	&nbsp;&nbsp;&nbsp;&nbsp;	**mestizo** = 1553.2442199775533
 
-	diferencia = | 1387.39 - 1553.24 | = |- 165.85 |
+	diferencia = | 1387.39 - 1553.24 |  =   |- 165.85 |
 	diferencia = 165.85
 
 **Algoritmo 2 (salario promedio):**
 
-indigena =  1291.5526315789473		meztizo = 1425.7911637173327
+**indígena** =  1291.5526315789473	&nbsp;&nbsp;&nbsp;&nbsp;	**mestizo** = 1425.7911637173327
 
-	diferencia = | 1291.55 - 1425.8 | = |- 134.25 |
+	diferencia = | 1291.55 - 1425.8 |   =   |- 134.25 |
 	diferencia = 134.25
 
 
-## ¿Qué porcentaje del salario maximo de un meztizo (Post-grado), recibe un indígena con las mismas características?
+## ¿Qué porcentaje del salario máximo de un meztizo (Post-grado), recibe un indígena con esas mismas características?
 
-print(f"Recibe el ${(4264 * 100)/5620.toDouble}%.2f%% del salario maximo de un meztizo con similares caracteristicas\n")
+print(f"Recibe el ${(4264 * 100)/5620.toDouble}%.2f%% del salario máximo de un meztizo con similares caracteristicas\n")
 
 
-## ¿Es posible que con el tiempo los niveles de empleo adecuado y desempleo en los indígenas hayan aumentado con respecto a los demas grupos poblacionales? ¿Es posible demostrar como ha variado su condicion laboral con el paso de los años?
+## ¿Es posible que con el tiempo los niveles de empleo adecuado y desempleo en los indígenas hayan aumentado con respecto a los demás grupos poblacionales? ¿Es posible demostrar como ha variado su condición laboral con el paso de los años?
 
 	z.show(indg.stat.crosstab("condicion_actividad", "anio").orderBy("condicion_actividad_anio"))
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-## ¿Qué hay con respecto a las personas que no son indígenas? ¿Se puede observar una similaridad en cuanto a la estadistica?
+## ¿Qué hay con respecto a las personas que no son indígenas? ¿Se puede observar una similaridad en cuanto a la estadística?
 
 	z.show(noIndg.stat.crosstab("condicion_actividad", "anio").orderBy("condicion_actividad_anio"))
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ### Respuesta
-Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento hacia los indígenas, ya que todos los grupos poblacionales han demostrado que han tendido a la baja con respecto al empleo adecuado en el ecuador, además de que la tasa de desempleo (oculto y abierto) a tendido a la baja en todos los grupos.
+Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento hacia los indígenas, ya que todos los grupos poblacionales han demostrado que han tendido a la baja con respecto al empleo adecuado en el ecuador, además de que la tasa de desempleo (oculto y abierto) a tendido también a la baja en todos los grupos.
 
 ## De las personas indígenas ¿Es posible que hayan sido las mujeres las mas que menor valor de ingreso han obtenido? ¿Existe alguna diferencia significativa entre el porcentaje de ingresos laborales que generaron las mujeres en  con respecto a los hombres?
 
@@ -157,33 +156,32 @@ Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento 
 
 
 
-## Panorama histórico vs panorama actual de los indígenas
+## Panorama histórico vs actual de los indígenas
 
-En el Ecuador historicamente los indígenas han sido catalogados como uno de los grupos mas vulnerable desde la conquista de los españoles, desde entonces este grupo étnico ha sido discriminado, al otro lado de la balanza tenemos a los mestizos quienes en la actualidad son el grupo etnico comun en el pais y muchos lo consideran como el privilegiado ya que en su mayoria se encuentra ubicados en areas centricas de las provincias lo que se los pfrece gran ventaja economica, mientras que los indigenas se encuentran relegados a las areas rurales 
+En el Ecuador historicamente los indígenas han sido catalogados como uno de los grupos más vulnerable desde la conquista de los españoles, desde entonces este grupo étnico ha sido discriminado, al otro lado de la balanza tenemos a los mestizos quienes en la actualidad son el grupo etnico comun en el pais y muchos lo consideran como el privilegiado ya que en su mayoria se encuentra ubicados en areas centricas de las provincias lo que se los pfrece gran ventaja economica, mientras que los indigenas se encuentran relegados a las areas rurales 
 
 Actualmente existe la creencia de que estas diferencias ya quedaron en el pasado, los ultimos gobiernos del Ecuador han impulsado distintas campañas con este propósito como es la del Buen vivir (Sumak Kawsay), de la misma manera también se han hecho muchas campañas de alfabetización, orientados para estos sectores, sumado a esto tenemos las distintas campañas de información del gobierno nacional que dan a entender que esta problemática social ha sido resuelta, por lo que buscaremos datos en ambos grupos sociales para despues compararlos y llegar a una conclusion lo mas acertada posible. 
 
 Una de las formas en las que se muestra la discrimanacion en el dia a dia es a la hora en la que las empresas presinden de sus empleados por lo que un indice de deseempleo mayor en los indigenas seria una indicio de racismo.
 ## Porcentaje de desempleo indígena en el área urbana y rural
 
-Para esta pregunta nos centraremos en las siguientes columnas:
+Para esta pregunta es necesario centrarse en las siguientes columnas:
 
 * **area:** Sector o área donde habita la persona (rural o urbana)
 * **condicion_actividad:** Condición laboral de la persona, es decir si se encuentra empleado o no
 
-Generalmente se tiene la creencia que los indigenas viven en su mayoria en el area rural, mientras que los mestizos en el area urbana, por lo que el deseempleo deberia proporcional a esto 
+Generalmente, se tiene la creencia que los indígenas viven en su mayoria en el área rural, mientras que los mestizos en el area urbana, por lo que el deseempleo deberia proporcional a esto 
 
-indigenas
+#### Indígenas
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-mestizos
+#### Mestizos
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 En las ultimas decadas los indigenas han empezado a migrar a las ciudades en busca de mejores oportunidades, sim embargo no todos han encontrado estas oportunidades ya que en la grafica vemos que existe un mayor deseempleo para los indigenas en el area urbana 
 en contraste en los mestizos tambien existe un mayor indice de desempleo en el area urbana ya que la mayoria no suele migrar por lo que se quedan buscando oportunidades en su ciudad natal
-
 
 ## Media de ingresos de indigenas segun el grupo de ocupacion
 
@@ -194,12 +192,11 @@ Para estas consultas usaremos las siguientes columnas:
 * grupo_ocupacion: Es la rama o sextor de trabajo en la que se opera
 * ingreso_laboral: es la cantidad de dinero que resive mensualmente por su trabajo
 
-
-indigenas
+### Indígenas
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-mestizos
+### Mestizos
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
@@ -209,12 +206,11 @@ podemos observar la media de ingresos por cada grupo de ocupacion, en general ve
 
 Ahora ya sabemos que los mestizos ganan mas que los indigenas, los indigenas se encuentran ubicados en su mayoria en el area rural por lo que los indigenas recien graduados o que emigraron por sus estudios buscan estar cerca de su familia por lo que podrian buscar empleo cerca de estas zonas, historicamente la zona urbana tiene empleos mejor pagados que la rural, por lo que queremos ver si esto podria explicar los datos anteriores
 
-
-indigenas
+### Indígenas
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-mestizos
+### Mestizos
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
@@ -227,15 +223,13 @@ Ya confirmamos que los indigenas ganan menos independientemente del sector en el
 * nivel_de_instruccion: La columna describe el grado de estudios que tienen las personas encuestadas
 * ingreso_laboral: es la cantidad de dinero que resive mensualmente por su trabajo
 
-
-indigenas
-
-<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
-
-mestizos
+### Indígenas
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
+### Mestizos
+
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 finalmente podemos comprobar que pese a tener el mismo grado de estudio en promedio los mestizos ganan mas dinero que los indigenas en todas las categorias de nivel de estudio 
 
 #### Conclusión
@@ -243,12 +237,11 @@ finalmente podemos comprobar que pese a tener el mismo grado de estudio en prome
 En estas consultas comprobamos que existe una brecha salarial entre indigenas y mestizos que es considerable y en la que no incide ni el area en el que estan ubicados ni su nivel de estudio, ademas sabemos que los indigenas que se desempenan en los mismos grupos de ocupacion ganan menos que los mestizos, con esto podemos confirmar que existe descriminacion contra los indigenas al momento de remunerados o al momento de ser ascendidos
 
 
+Una de las formas en las que se muestra la discriminación mas habituales, es a la hora en la que las empresas presinden de sus empleados por lo que un indice de deseempleo mayor en los indigenas seria una indicio de racismo
 
-Una de las formas en las que se muestra la discrimanacion en el dia a dia es a la hora en la que las empresas presinden de sus empleados por lo que un indice de deseempleo mayor en los indigenas seria una indicio de racismo
+## Número de desempleo indígena según el nivel de instrucción
 
-## Numero de desempleo indigena segun el nivel de instruccion
-
-Ahora nos enfocaremos en la categoria de deseempleo abierto es decir que no incluye otras formas de empleo inadecuado como trabajos transitorios
+Ahora nos enfocaremos en la categoría de desempleo abierto, es decir que no incluye otras formas de empleo inadecuado como trabajos transitorios
  Para estas consultas nos centraremos en las siguientes columnas:
 
 * nivel_de_instruccion: La columna describe el grado de estudios que tienen las personas encuestadas
@@ -256,11 +249,11 @@ Ahora nos enfocaremos en la categoria de deseempleo abierto es decir que no incl
 
 Ahora averiguaremos como es porcentualmente el desempleo en ambos grupos etnicos para averiguar si existe una diferencia considerable entre el porcentaje de deseemplo entre estos grupos Para la grafica usaremos un grafico de barras que son los mas utiles para comparar categorias y su frecuencia , que es lo que buscamos en esta consulta
 
-indigenas
+### Indígenas
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-mestizos
+### Mestizos
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
@@ -275,30 +268,30 @@ El estado civil influye en alguna manera en el indice de deseempleo?, existe alg
 
 Generalmente se tiene la creencia de que los indigenas son mas apegados a su familia por lo que  buscan la forma de mantenerla, esto deberia de influir en el indice de deseempleo ?
 
-indigenas
+### Indígenas
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-mestizos
+### Mestizos
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 Los resultados son muy similares por lo que concluimos que en los dos grupos etnicos existe el sentido de responsabilidad en la gentee casada para insistir en la busqueda de un trabajo, mientras que la gente soltera no siente esta responsabilidad y no insiste en la busqueda de un trabajo, un dato a resaltar es que en ambos casos las personas viudas, son las que tienen un menor indice de deseempleo
 
-## Evolucion de deseempleo indigena segun el genero
+## Evolución de deseempleo indígena según el genero
 
 como ha evolucionado el deseempleo en la poblacion indigena en este tiempo en el cual ha existido una crisis creciente? Para estas consultas nos centraremos en las siguientes columnas:
 
-* year: La columna describe el año en el que la persona que realizo la encuesa
+* year: La columna describe el año en el que la persona que realizó la encuesta
 * genero: La columna describe el sexo de la persona que realizo la encuesa
 * condicion_activad: La columna describe como esta su condicion laboral actualmente es decir si se encuentra empleado o no
 Otro factor de discriminacion es el genero, historicamente las mujeres tambien han sido relegadas, pero esta tendencia sigue en la actualidad ?
 
-indigenas
+### Indígenas
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-mestizos
+### Mestizos
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
@@ -316,12 +309,11 @@ Para estas consultas nos centraremos en las siguientes columnas:
 * year: La columna describe el año en el que la persona que realizo la encuesa
 * nivel_de_instruccion: La columna describe el grado de estudios que tienen las personas encuestadas
 
-
-indigenas
+#### Indígenas
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
-mestizos
+#### Mestizos
 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 

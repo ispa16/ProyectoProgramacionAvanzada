@@ -5,9 +5,9 @@ En el año 2008 el Ecuador fue reconocido como un estado intercultural y pluricu
 La interculturalidad que expresa la constitución vigente establece que, las definiciones sociales como idiomas nativos, costumbres, jurisdicción, entre otros, de los indígenas deben ser respetados por todos los pueblos de nacionalidad ecuatoriana como los blancos y meztizos, mantiendo asi como una correcta convivencia bajo el respeto mutuo sin discriminación y bajo el cumplimiento de sus derechos.  
 > Art.6, Constitución de la República del Ecuador), Todas las ecuatorianas y los ecuatorianos son ciudadanos y gozarán de los derechos establecidos en la Constitución. La nacionalidad ecuatoriana es el vínculo jurídico político de las personas con el Estado, sin perjuicio de su pertenencia a alguna de las nacionalidades indígenas que coexisten en el Ecuador.
 
-Y a su vez en el Art.11, Constitución de la República del Ecuador:
+Y a su vez en el aritculo 11, de la Constitución de la República del Ecuador se establece que:
 
-Todas las personas son iguales y gozarán de los mismos derechos, deberes y oportunidades. Nadie podrá ser discriminado por razones de etnia, lugar de nacimiento, edad, sexo, identidad de género, identidad cultural, estado civil, idioma, religión, ideología, filiación política, pasado judicial, condición socio-económica, condición migratoria, orientación sexual, estado de salud, portar VIH, discapacidad, diferencia física; ni por cualquier otra distinción, personal o colectiva, temporal o permanente, que tenga por objeto o resultado menoscabar o anular el reconocimiento, goce o ejercicio de los derechos. La ley sancionará toda forma de discriminación. El Estado adoptará medidas de acción afirmativa que promuevan la igualdad real en favor de los titulares de derechos que se encuentren en situación de desigualdad.
+> Art.11, Todas las personas son iguales y gozarán de los mismos derechos, deberes y oportunidades. Nadie podrá ser discriminado por razones de etnia, lugar de nacimiento, edad, sexo, identidad de género, identidad cultural, estado civil, idioma, religión, ideología, filiación política, pasado judicial, condición socio-económica, condición migratoria, orientación sexual, estado de salud, portar VIH, discapacidad, diferencia física; ni por cualquier otra distinción, personal o colectiva, temporal o permanente, que tenga por objeto o resultado menoscabar o anular el reconocimiento, goce o ejercicio de los derechos. La ley sancionará toda forma de discriminación. El Estado adoptará medidas de acción afirmativa que promuevan la igualdad real en favor de los titulares de derechos que se encuentren en situación de desigualdad.
 
 Habiendo establecido esto, los análisis de esta presentación se centran en la implementación de sentencias informáticas para demostrar cual ha sido la situación de cada persona caracterizada por su etnia, específicamente a la población de orígen del Ecuador, los indígenas. 
 ## Cantidad de Personas clasificadas por su etnia
@@ -123,20 +123,7 @@ Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento 
 <iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 
-
-
-
-
-
-
-
-pruebas2 
-<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
-
-
-_________________________________________________________________________________________________________
-Al final de todo............
-%md
+_____________________________________________________________________________________________________________________________________________________
 # Bibliografía
 Díaz Ocampo, E., & Antúnez Sánchez, A. (2016). _El conflicto de competencia en la justicia indígena del Ecuador._ Temas Socio-Jurídicos, 35(70), 95-117. https://doi.org/10.29375/01208578.2503
 

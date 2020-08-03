@@ -5,7 +5,7 @@ En el año 2008 el Ecuador fue reconocido como un estado intercultural y pluricu
 La interculturalidad que expresa la constitución vigente establece que, las definiciones sociales como idiomas nativos, costumbres, jurisdicción, entre otros, de los indígenas deben ser respetados por todos los pueblos de nacionalidad ecuatoriana como los blancos y meztizos, mantiendo asi como una correcta convivencia bajo el respeto mutuo sin discriminación y bajo el cumplimiento de sus derechos.  
 > Art.6, Constitución de la República del Ecuador), Todas las ecuatorianas y los ecuatorianos son ciudadanos y gozarán de los derechos establecidos en la Constitución. La nacionalidad ecuatoriana es el vínculo jurídico político de las personas con el Estado, sin perjuicio de su pertenencia a alguna de las nacionalidades indígenas que coexisten en el Ecuador.
 
-Y a su vez en el art.11, Constitución de la República del Ecuador:
+Y a su vez en el Art.11, Constitución de la República del Ecuador:
 
 Todas las personas son iguales y gozarán de los mismos derechos, deberes y oportunidades. Nadie podrá ser discriminado por razones de etnia, lugar de nacimiento, edad, sexo, identidad de género, identidad cultural, estado civil, idioma, religión, ideología, filiación política, pasado judicial, condición socio-económica, condición migratoria, orientación sexual, estado de salud, portar VIH, discapacidad, diferencia física; ni por cualquier otra distinción, personal o colectiva, temporal o permanente, que tenga por objeto o resultado menoscabar o anular el reconocimiento, goce o ejercicio de los derechos. La ley sancionará toda forma de discriminación. El Estado adoptará medidas de acción afirmativa que promuevan la igualdad real en favor de los titulares de derechos que se encuentren en situación de desigualdad.
 
@@ -19,7 +19,7 @@ Habiendo establecido esto, los análisis de esta presentación se centran en la 
 	val indg = data.where($"etnia" === "1 - Indígena")
 	print(f"${(indg.count * 100)/data.count.toDouble}%.2f%% de Indígenas encuestados")
 
-Primeramente, es necesario determinar cual es el el estado laboral de los índigenas, con el fin de ir obteniendo una aproximacion de como se ha sucitado 
+Ahora sabemos que las personas indigenas son unos de los grupos a los que mas se les a relizado la encuesta, es necesario determinar cual es el el estado laboral de los índigenas, con el fin de ir obteniendo una aproximacion de como se ha sucitado las condiciones laborales a lo largo de estos años.
 ## ¿Cuál es la clasificación de indígenas con respecto a sus condición laboral (condicion_actividad)?
 
 > print(f"${(indg.where($"condicion_actividad" === "1 - Empleo Adecuado/Pleno").count * 100)/indg.count.toDouble}%.2f%% Empleo Adecuado\n${(indg.where($"condicion_actividad" === "2 - Subempleo por insuficiencia de tiempo de trabajo").count * 100)/indg.count.toDouble}%.2f%% Subempleo por insuficiencia de trabajo\n${(indg.where($"condicion_actividad" === "4 - Otro empleo no pleno").count * 100)/indg.count.toDouble}%.2f%% Otro empleo no pleno\n${(indg.where($"condicion_actividad" === "5 - Empleo no remunerado").count * 100)/indg.count.toDouble}%.2f%% Empleo no remunerado\n${(indg.where($"condicion_actividad" === "6 - Empleo no clasificado").count * 100)/indg.count.toDouble}%.2f%% Empleo no clasificado\n${(indg.where($"condicion_actividad" === "7 - Desempleo abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.where($"condicion_actividad" === "8 - Desempleo oculto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Oculto")
@@ -31,8 +31,8 @@ Se puede establecer mediante información del INEC que en la encuesta EMENDU, el
 
 <a href="https://github.com/ispa16/ProyectoProgramacionAvanzada/wiki/Informaci%C3%B3n-General"> Para más información acerca de las definiciones de la encuesta EMENDU, visite este link</a>
 
-De esta manera podemos establecer que la información mas concreta para este análisis es la "desempleo abierto" ya que esta hace referencia a personas que han buscado empleo durante una semana antes de realizarle dicha encuesta y no han logrado encontrarlo, la pregunta quedaría asi:
-### _¿Cuál es la cantidad de indígenas que estan con desempleo abierto (búsqueda activamente de empleo durante el mes anterior a la encuesta sin éxito)?_
+De esta manera podemos establecer que la información mas concreta para este análisis son aquellos indigenas que hallan sido catalogados con "desempleo abierto", ya que esta hace referencia a personas que han estado en la búsqueda de empleo durante una semana antes de realizarle dicha encuesta y no han logrado encontrarlo, la pregunta estaría mejor formulada de la siguiente manera:
+### _¿Cuál es la cantidad de indígenas que se encuentran con desempleo abierto (búsqueda activamente de empleo durante el mes anterior a la encuesta sin éxito)?_
 
 	indg.where($"condicion_actividad" === "7 - Desempleo abierto").count
 
@@ -45,7 +45,7 @@ Para analizar si existe alguna influencia que denote a la educación como parte 
 	val indgEduc =  indg.where($"condicion_actividad" === "7 - Desempleo abierto") 
 	z.show(indgEduc.groupBy("nivel_de_instruccion").count().as("cantidad").sort(desc("count")))
 	
-Se puede denotar que no es una relacion proporcional, las estadísticas nos presentan que la educacion aparentemente si ha incidido, esto debido a que 
+Se puede denotar que no es una relacion proporcional, las estadísticas nos presentan que la educación aparentemente si ha incidido, esto debido a que se puede ver que las personas con mayor nivel de instruccion son las que representan la menor cantidad de desempleados indígenas.
 ## ¿Puede una persona indígena con desempleo abierto, tener un ingreso laboral diferente de 0? ¿No es esto contradictorio? Compruebelo.
 
 	z.show(indgEduc.where($"ingreso_laboral" > 0))
@@ -54,16 +54,15 @@ Se puede denotar que no es una relacion proporcional, las estadísticas nos pres
 ### ¿Cómo es posible que una persona con un "desempleo abierto" tenga un ingreso laboral que no sea 0?
 Se puede considerar varios posibles errores:
 
-* **Primero:** La sentencia este mal escrita o con un error, lo cual es posible, pero se descarta al usar otra herramienta para comprobar su veracidad (excel) en el cual demuestra usando filtros que existen encuestados indigenas, con desempleo oculto que tienen un ingreso laboral mayor a 0.
+* **Primero:** La sentencia este mal escrita o con un error, lo cual es posible, pero se descarta al usar otra herramienta para comprobar su veracidad (SQL) en el cual demuestra usando filtros que existen encuestados indigenas, con desempleo oculto que tienen un ingreso laboral mayor a 0.
+
+/////////////////////////////////////////
 
 * **Segundo:** El archivo de origen vino con defectos, otra opcion posible, pero tambien descartada cuando leemos los significados de cada columna.
 
-_Posible Respuesta:_ La pagina web desde donde se proveyeron los datos, ofrece información acerca de que es el desempleo oculto y que 
-considera el mismo. Siendo asi el significado de esta variable "Personas sin empleo, que no estuvieron empleados en la semana pasada y que buscaron trabajo e
-hicieron gestiones concretas para conseguir empleo o para establecer algún negocio en las cuatro semanas anteriores a la entrevista."
+_Posible Respuesta:_ La pagina web oficial de la EMENDU,  ofrece información acerca de que es el desempleo oculto y que considera el mismo. Siendo asi el significado de esta variable "Personas sin empleo, que no estuvieron empleados en la semana pasada y que buscaron trabajo e hicieron gestiones concretas para conseguir empleo o para establecer algún negocio en las cuatro semanas anteriores a la entrevista."
 
-Se puede considerar como verdadera esta sentencia ya que, podemos deducir que el ingreso laboral que decretaron estas personas en la encuesta
-pertenece al ingreso laboral que recibian una semana antes de la encuesta, cuando aun estaban empleados.
+_Se puede considerar como verdadera esta sentencia ya que, podemos deducir que el ingreso laboral que decretaron estas personas en la encuesta pertenece al ingreso laboral que recibian una semana antes de la encuesta, cuando aun estaban empleados._
 
 Ahora que determinamos a la educacion como un factor 
 ## ¿Cuál es el valor máximo y mínimo que gana un indígena que tiene el nivel mas alto de estudios (Post-grado)?
@@ -75,70 +74,27 @@ z.show(indgEducPost.select("ingreso_laboral").summary("max", "min"))
 
 z.show(indgEducPost.select("ingreso_laboral").summary())
 
-### ¿Existen valores nulos?
-
-	z.show(indgEducPost.select("ingreso_laboral").groupBy("ingreso_laboral").count().sort(desc("count")))
-	
-### Limpieza de Nulos
-
-	val postIndg = indgEducPost.select("ingreso_laboral").where($"ingreso_laboral".isNotNull)
-
-### Búsqueda de acotas
-	
-	val cantValoresEnDifRangos =  scala.collection.mutable.ListBuffer[Long]()
-		val minValue = 0.0
-		val maxValue = 5264
-		val bins = 5.0
-		val range = (maxValue - minValue)/bins
-		var minCounter = minValue
-		var maxCounter = range
-		while (minCounter < maxValue){
-		  val valoresEnUnRango = postIndg.where($"ingreso_laboral".between(minCounter,maxCounter))
-		  cantValoresEnDifRangos.+=(valoresEnUnRango.count())
-		  minCounter = maxCounter
-		  maxCounter = maxCounter + range
-		}
-
-### Resultados de rangos
-	
-	println("Valores en diferentes rangos: ")
-	cantValoresEnDifRangos.foreach(println)
-
-### Promedio
-
-	val prom = postIndg.select(mean("ingreso_laboral")).first()(0).asInstanceOf[Double]
-
-### Desviación Estándar
-	
-	val desviacion = postIndg.select(stddev("ingreso_laboral")).first()(0).asInstanceOf[Double]
-	
-		
-Limites inf y supe......
-
-### Indígenas
-
-### Meztizos
 	
 Boxsplots rta
 
 ### Respuesta:
-	Considerando los resultados de los 2 algoritmos, se puede deducir que en efecto, existe una diferencia entre lo que gana un indigena (post-grado) en promedio,
-		con lo que gana un meztizo de similares caracteristicas, pero realmente no es una diferencia significativa, es un valor encontrado en un rango entre 130 -170.
-		Vease:
-		
-		**Algoritmo 1 (salario promedio):**
+Considerando los resultados de los 2 algoritmos, se puede deducir que en efecto, existe una diferencia entre lo que gana un indigena (post-grado) en promedio,
+con lo que gana un meztizo de similares caracteristicas, pero realmente no es una diferencia significativa, es un valor encontrado en un rango entre 130 -170.
+Vease:
 
-		indigena =  1387.386075949367		meztizo = 1553.2442199775533
-		
-			diferencia = | 1387.39 - 1553.24 | = |- 165.85 |
-			diferencia = 165.85
+**Algoritmo 1 (salario promedio):**
 
-		**Algoritmo 2 (salario promedio):**
+indigena =  1387.386075949367		meztizo = 1553.2442199775533
 
-	 	indigena =  1291.5526315789473		meztizo = 1425.7911637173327
+	diferencia = | 1387.39 - 1553.24 | = |- 165.85 |
+	diferencia = 165.85
 
-			diferencia = | 1291.55 - 1425.8 | = |- 134.25 |
-			diferencia = 134.25
+**Algoritmo 2 (salario promedio):**
+
+indigena =  1291.5526315789473		meztizo = 1425.7911637173327
+
+	diferencia = | 1291.55 - 1425.8 | = |- 134.25 |
+	diferencia = 134.25
 
 
 ## ¿Es posible que con el tiempo los niveles de empleo adecuado y desempleo en los indígenas hayan aumentado con respecto a los demas grupos poblacionales? ¿Es posible demostrar como ha variado su condicion laboral con el paso de los años?

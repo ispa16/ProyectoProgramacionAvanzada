@@ -13,11 +13,13 @@ Habiendo establecido esto, los análisis de esta presentación se centran en la 
 ## Cantidad de Personas clasificadas por su etnia
 
 	z.show(data.groupBy("etnia").count().sort(desc("count")))
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ## ¿Cuál es el porcentaje de indígenas (personas de población nativa u originaria del país) con respecto al porcentaje total de personas a las que se les tomó la encuesta?
 
 	val indg = data.where($"etnia" === "1 - Indígena")
 	print(f"${(indg.count * 100)/data.count.toDouble}%.2f%% de Indígenas encuestados")
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 Ahora sabemos que las personas indigenas son unos de los grupos a los que mas se les a relizado la encuesta, es necesario determinar cual es el el estado laboral de los índigenas, con el fin de ir obteniendo una aproximacion de como se ha sucitado las condiciones laborales a lo largo de estos años.
 ## ¿Cuál es la clasificación de indígenas con respecto a sus condición laboral (condicion_actividad)?
@@ -36,6 +38,8 @@ De esta manera podemos establecer que la información mas concreta para este an�
 
 	indg.where($"condicion_actividad" === "7 - Desempleo abierto").count
 
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+
 Las personas con desempleo abierto son 915, esto daria a interpretar que las personas indigenas no sufren en su mayor parte de desempleo. Puede que la educacion haya sido un valor influyente en este resultado, podemos establecer la informacion que denota de Rodriguez (2018) en su artículo construir la interculturalidad. Políticas educativas, diversidad cultural y desigualdad en Ecuador: 
 	La unidad educativa Tránsito Amaguaña, situada al interior del Mercado Mayorista, en el sur de Quito, acoge alumnos de nacionalidad indígena kichwa. La situación de pobreza en las comunidades, donde las distintas reformas agrarias no han llevado a un reparto equitativo de la tierra ni han logrado detener el proceso de empobrecimiento de la población indígena en el campo...Procedentes en su mayoría de comunidades situadas en la región andina, los niños que asisten a esta escuela forman parte del proyecto migratorio de sus progenitores, quienes trabajan en el Mercado como cargadores y vendedores de alimentos.
 
@@ -45,11 +49,14 @@ Para analizar si existe alguna influencia que denote a la educación como parte 
 	val indgEduc =  indg.where($"condicion_actividad" === "7 - Desempleo abierto") 
 	z.show(indgEduc.groupBy("nivel_de_instruccion").count().as("cantidad").sort(desc("count")))
 	
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 Se puede denotar que no es una relacion proporcional, las estadísticas nos presentan que la educación aparentemente si ha incidido, esto debido a que se puede ver que las personas con mayor nivel de instruccion son las que representan la menor cantidad de desempleados indígenas.
 ## ¿Puede una persona indígena con desempleo abierto, tener un ingreso laboral diferente de 0? ¿No es esto contradictorio? Compruebelo.
 
 	z.show(indgEduc.where($"ingreso_laboral" > 0))
 	indgEduc.where($"ingreso_laboral" > 0).count
+
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 ### ¿Cómo es posible que una persona con un "desempleo abierto" tenga un ingreso laboral que no sea 0?
 Se puede considerar varios posibles errores:
@@ -70,11 +77,14 @@ Ahora que determinamos a la educacion como un factor
 val indgEducPost = (indg.where($"nivel_de_instruccion" === "10 - Post-grado"))
 z.show(indgEducPost.select("ingreso_laboral").summary("max", "min"))
 
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+
 ## ¿Existe una diferencia de salario que un indigena(post-grado) recibe de ingreso laboral promedio, con respecto al valor de ingreso laboral promedio de un ecuatoriano meztizo(post-grado)?
 
 z.show(indgEducPost.select("ingreso_laboral").summary())
 
-	
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
+
 Boxsplots rta
 
 ### Respuesta:
@@ -109,7 +119,8 @@ Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento 
 ## De las personas indígenas ¿Es posible que hayan sido las mujeres las mas que menor valor de ingreso han obtenido? ¿Existe alguna diferencia significativa entre el porcentaje de ingresos laborales que generaron las mujeres en  con respecto a los hombres?
 
 	z.show(indg.groupBy("anio").pivot("genero").agg( round((sum("ingreso_laboral")*100)/13925210) ).orderBy("anio"))
-
+	
+<iframe src="https://801c17614aae.ngrok.io/#/notebook/2FCCUUVSD/paragraph/paragraph_1593403281153_-2087515944?asIframe" style="width: 500px; height: 400px; border: 0px"></iframe>
 
 
 

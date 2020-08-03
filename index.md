@@ -8,114 +8,83 @@ La interculturalidad que expresa la constitución vigente establece que, las def
 Y a su vez en el art.11, Constitución de la República del Ecuador:
 
 Todas las personas son iguales y gozarán de los mismos derechos, deberes y oportunidades. Nadie podrá ser discriminado por razones de etnia, lugar de nacimiento, edad, sexo, identidad de género, identidad cultural, estado civil, idioma, religión, ideología, filiación política, pasado judicial, condición socio-económica, condición migratoria, orientación sexual, estado de salud, portar VIH, discapacidad, diferencia física; ni por cualquier otra distinción, personal o colectiva, temporal o permanente, que tenga por objeto o resultado menoscabar o anular el reconocimiento, goce o ejercicio de los derechos. La ley sancionará toda forma de discriminación. El Estado adoptará medidas de acción afirmativa que promuevan la igualdad real en favor de los titulares de derechos que se encuentren en situación de desigualdad.
-## Inicialización de las Variables
-
-val myDataSchema = StructType(
-	Array(
-		StructField("id_persona", DecimalType(26, 0), true), 
-		StructField("anio", IntegerType, true), 
-		StructField("mes", IntegerType, true), 
-		StructField("provincia", IntegerType, true), 
-		StructField("canton", IntegerType, true), 
-		StructField("area", StringType, true), 
-		StructField("genero", StringType, true), 
-		StructField("edad", IntegerType, true), 
-		StructField("estado_civil", StringType, true), 
-		StructField("nivel_de_instruccion", StringType, true), 
-		StructField("etnia", StringType, true), 
-		StructField("ingreso_laboral", IntegerType, true), 
-		StructField("condicion_actividad", StringType, true), 
-		StructField("sectorizacion", StringType, true), 
-		StructField("grupo_ocupacion", StringType, true), 
-		StructField("rama_actividad", StringType, true), 
-		StructField("factor_expansion", DoubleType, true)
-	));
-
-// Uso del esquema
-val data = spark.read
-.schema(esquemaEstructurado)
-.option("header", "true")
-.option("delimiter", "\t")
-.csv("Datos_ENEMDU_PEA_v2.csv")
 
 Habiendo establecido esto, los análisis de esta presentación se centran en la implementación de sentencias informáticas para demostrar cual ha sido la situación de cada persona caracterizada por su etnia, específicamente a la población de orígen del Ecuador, los indígenas. 
-# Cantidad de Personas clasificadas por su etnia
-_________________________________________________________________________________________________________
+## Cantidad de Personas clasificadas por su etnia
 
-z.show(data.groupBy("etnia").count().sort(desc("count")))
-_________________________________________________________________________________________________________
-%md
+	z.show(data.groupBy("etnia").count().sort(desc("count")))
+
 ## ¿Cuál es el porcentaje de indígenas (personas de población nativa u originaria del país) con respecto al porcentaje total de personas a las que se les tomó la encuesta?
-_________________________________________________________________________________________________________
 
-val indg = data.where($"etnia" === "1 - Indígena")
-print(f"${(indg.count * 100)/data.count.toDouble}%.2f%% de Indígenas encuestados")
-_________________________________________________________________________________________________________
-%md
+	val indg = data.where($"etnia" === "1 - Indígena")
+	print(f"${(indg.count * 100)/data.count.toDouble}%.2f%% de Indígenas encuestados")
+
 Primeramente, es necesario determinar cual es el el estado laboral de los índigenas, con el fin de ir obteniendo una aproximacion de como se ha sucitado 
 ## ¿Cuál es la clasificación de indígenas con respecto a sus condición laboral (condicion_actividad)?
-_________________________________________________________________________________________________________
-print(f"${(indg.where($"condicion_actividad" === "1 - Empleo Adecuado/Pleno").count * 100)/indg.count.toDouble}%.2f%% Empleo Adecuado\n${(indg.where($"condicion_actividad" === "2 - Subempleo por insuficiencia de tiempo de trabajo").count * 100)/indg.count.toDouble}%.2f%% Subempleo por insuficiencia de trabajo\n${(indg.where($"condicion_actividad" === "4 - Otro empleo no pleno").count * 100)/indg.count.toDouble}%.2f%% Otro empleo no pleno\n${(indg.where($"condicion_actividad" === "5 - Empleo no remunerado").count * 100)/indg.count.toDouble}%.2f%% Empleo no remunerado\n${(indg.where($"condicion_actividad" === "6 - Empleo no clasificado").count * 100)/indg.count.toDouble}%.2f%% Empleo no clasificado\n${(indg.where($"condicion_actividad" === "7 - Desempleo abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.where($"condicion_actividad" === "8 - Desempleo oculto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Oculto")
-_________________________________________________________________________________________________________
-%md
+
+> print(f"${(indg.where($"condicion_actividad" === "1 - Empleo Adecuado/Pleno").count * 100)/indg.count.toDouble}%.2f%% Empleo Adecuado\n${(indg.where($"condicion_actividad" === "2 - Subempleo por insuficiencia de tiempo de trabajo").count * 100)/indg.count.toDouble}%.2f%% Subempleo por insuficiencia de trabajo\n${(indg.where($"condicion_actividad" === "4 - Otro empleo no pleno").count * 100)/indg.count.toDouble}%.2f%% Otro empleo no pleno\n${(indg.where($"condicion_actividad" === "5 - Empleo no remunerado").count * 100)/indg.count.toDouble}%.2f%% Empleo no remunerado\n${(indg.where($"condicion_actividad" === "6 - Empleo no clasificado").count * 100)/indg.count.toDouble}%.2f%% Empleo no clasificado\n${(indg.where($"condicion_actividad" === "7 - Desempleo abierto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Abierto\n${(indg.where($"condicion_actividad" === "8 - Desempleo oculto").count * 100)/indg.count.toDouble}%.2f%% Desempleo Oculto")
+
 ## ¿Cuál es la cantidad de indígenas que están con desempleo?
 Se puede establecer mediante información del INEC que en la encuesta EMENDU, el desempleo se divide en dos partes, una denominada desempleo abierto y otra denominada desempleo oculto, en este analisis de datos, no se toma en cuenta a las personas con desempleo oculto para establecer dicho analisis, esto debido a que las personas caracterizadas por este, son aquellas que no han obtenido trabajo, pero por diversas razones que son competentes a cada individuo mas no a una socailizacion economica:
 
-	Desempleo oculto: Personas sin empleo, que no estuvieron empleados la semana pasada, que no buscaron trabajo y no hicieron gestiones concretas para conseguir empleo o para establecer algún negocio en las cuatro semanas por alguna de las siguientes razones: tiene un trabajo esporádico u ocasional; tiene un trabajo para empezar inmediatamente; espera respuesta por una gestión en una empresa o negocio propio; espera respuesta de un empleador o de otras gestiones efectuadas para conseguir empleo; espera cosecha o temporada de trabajo o piensa que no le darán trabajo o se cansó de buscar.
+> **Desempleo oculto:** Personas sin empleo, que no estuvieron empleados la semana pasada, que no buscaron trabajo y no hicieron gestiones concretas para conseguir empleo o para establecer algún negocio en las cuatro semanas por alguna de las siguientes razones: tiene un trabajo esporádico u ocasional; tiene un trabajo para empezar inmediatamente; espera respuesta por una gestión en una empresa o negocio propio; espera respuesta de un empleador o de otras gestiones efectuadas para conseguir empleo; espera cosecha o temporada de trabajo o piensa que no le darán trabajo o se cansó de buscar.
 
 <a href="https://github.com/ispa16/ProyectoProgramacionAvanzada/wiki/Informaci%C3%B3n-General"> Para más información acerca de las definiciones de la encuesta EMENDU, visite este link</a>
 
 De esta manera podemos establecer que la información mas concreta para este análisis es la "desempleo abierto" ya que esta hace referencia a personas que han buscado empleo durante una semana antes de realizarle dicha encuesta y no han logrado encontrarlo, la pregunta quedaría asi:
 ### _¿Cuál es la cantidad de indígenas que estan con desempleo abierto (búsqueda activamente de empleo durante el mes anterior a la encuesta sin éxito)?_
-_________________________________________________________________________________________________________
-indg.where($"condicion_actividad" === "7 - Desempleo abierto").count
-_________________________________________________________________________________________________________
-%md
+
+	indg.where($"condicion_actividad" === "7 - Desempleo abierto").count
+
 Las personas con desempleo abierto son 915, esto daria a interpretar que las personas indigenas no sufren en su mayor parte de desempleo. Puede que la educacion haya sido un valor influyente en este resultado, podemos establecer la informacion que denota de Rodriguez (2018) en su artículo construir la interculturalidad. Políticas educativas, diversidad cultural y desigualdad en Ecuador: 
 	La unidad educativa Tránsito Amaguaña, situada al interior del Mercado Mayorista, en el sur de Quito, acoge alumnos de nacionalidad indígena kichwa. La situación de pobreza en las comunidades, donde las distintas reformas agrarias no han llevado a un reparto equitativo de la tierra ni han logrado detener el proceso de empobrecimiento de la población indígena en el campo...Procedentes en su mayoría de comunidades situadas en la región andina, los niños que asisten a esta escuela forman parte del proyecto migratorio de sus progenitores, quienes trabajan en el Mercado como cargadores y vendedores de alimentos.
 
 Para analizar si existe alguna influencia que denote a la educación como parte fundamental de encontrar una empleo más factiblemente. Nos podemos preguntar:
 ## ¿Cuál es el nivel de educación que tienen los indígenas desempleados abiertamente?
-_________________________________________________________________________________________________________
-val indgEduc =  indg.where($"condicion_actividad" === "7 - Desempleo abierto") 
-z.show(indgEduc.groupBy("nivel_de_instruccion").count().as("cantidad").sort(desc("count")))
-_________________________________________________________________________________________________________
-%md
+
+	val indgEduc =  indg.where($"condicion_actividad" === "7 - Desempleo abierto") 
+	z.show(indgEduc.groupBy("nivel_de_instruccion").count().as("cantidad").sort(desc("count")))
+	
 Se puede denotar que no es una relacion proporcional, las estadísticas nos presentan que la educacion aparentemente si ha incidido, esto debido a que 
 ## ¿Puede una persona indígena con desempleo abierto, tener un ingreso laboral diferente de 0? ¿No es esto contradictorio? Compruebelo.
-_________________________________________________________________________________________________________
-indgEduc.where($"ingreso_laboral" > 0)
-indgEduc.where($"ingreso_laboral" > 0).count
-_________________________________________________________________________________________________________
-%md
-	### ¿Cómo es posible que una persona con un "desempleo abierto" tenga un ingreso laboral que no sea 0?
-	....
-_________________________________________________________________________________________________________
-%md
+
+	z.show(indgEduc.where($"ingreso_laboral" > 0))
+	indgEduc.where($"ingreso_laboral" > 0).count
+
+### ¿Cómo es posible que una persona con un "desempleo abierto" tenga un ingreso laboral que no sea 0?
+Se puede considerar varios posibles errores:
+
+* **Primero:** La sentencia este mal escrita o con un error, lo cual es posible, pero se descarta al usar otra herramienta para comprobar su veracidad (excel) en el cual demuestra usando filtros que existen encuestados indigenas, con desempleo oculto que tienen un ingreso laboral mayor a 0.
+
+* **Segundo:** El archivo de origen vino con defectos, otra opcion posible, pero tambien descartada cuando leemos los significados de cada columna.
+
+_Posible Respuesta:_ La pagina web desde donde se proveyeron los datos, ofrece información acerca de que es el desempleo oculto y que 
+considera el mismo. Siendo asi el significado de esta variable "Personas sin empleo, que no estuvieron empleados en la semana pasada y que buscaron trabajo e
+hicieron gestiones concretas para conseguir empleo o para establecer algún negocio en las cuatro semanas anteriores a la entrevista."
+
+Se puede considerar como verdadera esta sentencia ya que, podemos deducir que el ingreso laboral que decretaron estas personas en la encuesta
+pertenece al ingreso laboral que recibian una semana antes de la encuesta, cuando aun estaban empleados.
+
 Ahora que determinamos a la educacion como un factor 
 ## ¿Cuál es el valor máximo y mínimo que gana un indígena que tiene el nivel mas alto de estudios (Post-grado)?
-_________________________________________________________________________________________________________
+
 val indgEducPost = (indg.where($"nivel_de_instruccion" === "10 - Post-grado"))
 z.show(indgEducPost.select("ingreso_laboral").summary("max", "min"))
-_________________________________________________________________________________________________________
-%md
+
 ## ¿Existe una diferencia de salario que un indigena(post-grado) recibe de ingreso laboral promedio, con respecto al valor de ingreso laboral promedio de un ecuatoriano meztizo(post-grado)?
-_________________________________________________________________________________________________________
+
 z.show(indgEducPost.select("ingreso_laboral").summary())
-_________________________________________________________________________________________________________
-%md
-	### ¿Existen valores nulos?
-_________________________________________________________________________________________________________
+
+### ¿Existen valores nulos?
+
 	z.show(indgEducPost.select("ingreso_laboral").groupBy("ingreso_laboral").count().sort(desc("count")))
-_________________________________________________________________________________________________________
-%md
-	### Limpieza de Nulos
-_________________________________________________________________________________________________________
+	
+### Limpieza de Nulos
+
 	val postIndg = indgEducPost.select("ingreso_laboral").where($"ingreso_laboral".isNotNull)
-_________________________________________________________________________________________________________
-%md
-	### Búsqueda de acotas
-_________________________________________________________________________________________________________
+
+### Búsqueda de acotas
+	
 	val cantValoresEnDifRangos =  scala.collection.mutable.ListBuffer[Long]()
 		val minValue = 0.0
 		val maxValue = 5264
@@ -129,39 +98,30 @@ ________________________________________________________________________________
 		  minCounter = maxCounter
 		  maxCounter = maxCounter + range
 		}
-_________________________________________________________________________________________________________
-%md
-	### Resultados de rangos
-_________________________________________________________________________________________________________
+
+### Resultados de rangos
+	
 	println("Valores en diferentes rangos: ")
 	cantValoresEnDifRangos.foreach(println)
-_________________________________________________________________________________________________________
-%md
-	### Promedio
-_________________________________________________________________________________________________________
-	val prom = postIndg.select(mean("ingreso_laboral")).first()(0).asInstanceOf[Double]
-_________________________________________________________________________________________________________
-%md
-	### Desviación Estándar
-_________________________________________________________________________________________________________
-	val desviacion = postIndg.select(stddev("ingreso_laboral")).first()(0).asInstanceOf[Double]
-		desviacion: Double = 950.1400043069507
-_________________________________________________________________________________________________________
 
+### Promedio
+
+	val prom = postIndg.select(mean("ingreso_laboral")).first()(0).asInstanceOf[Double]
+
+### Desviación Estándar
+	
+	val desviacion = postIndg.select(stddev("ingreso_laboral")).first()(0).asInstanceOf[Double]
+	
+		
 Limites inf y supe......
 
-_________________________________________________________________________________________________________
-%md
-	### Indígenas
-_________________________________________________________________________________________________________
+### Indígenas
 
-%md
-	### Meztizos
-_________________________________________________________________________________________________________
+### Meztizos
+	
 Boxsplots rta
-_________________________________________________________________________________________________________
-%md
-	### Respuesta:
+
+### Respuesta:
 	Considerando los resultados de los 2 algoritmos, se puede deducir que en efecto, existe una diferencia entre lo que gana un indigena (post-grado) en promedio,
 		con lo que gana un meztizo de similares caracteristicas, pero realmente no es una diferencia significativa, es un valor encontrado en un rango entre 130 -170.
 		Vease:
@@ -179,22 +139,20 @@ ________________________________________________________________________________
 
 			diferencia = | 1291.55 - 1425.8 | = |- 134.25 |
 			diferencia = 134.25
-_________________________________________________________________________________________________________
-%md
-## ¿Es posible que con el tiempo los niveles de empleo adecuado y desempleo en los indígenas hayan aumentado con respecto a los demas grupos poblacionales? ¿Es posible demostrar como ha variado su condicion laboral con el paso de los años?
-_________________________________________________________________________________________________________
 
-%md
+
+## ¿Es posible que con el tiempo los niveles de empleo adecuado y desempleo en los indígenas hayan aumentado con respecto a los demas grupos poblacionales? ¿Es posible demostrar como ha variado su condicion laboral con el paso de los años?
+
+
 ## ¿Qué hay con respecto a las personas que no son indígenas? ¿Se puede observar una similaridad en cuanto a la estadistica?
-_________________________________________________________________________________________________________
-%md
-	### Respuesta
-	Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento hacia los indigenas, ya que todos los grupos poblacionales han demostrado que han tendido a la baja con respecto al empleo adecuado en el ecuador, además de que la tasa de desempleo (oculto y abierto) a tendido a la baja en todos los grupos.
-_________________________________________________________________________________________________________
+
+
+### Respuesta
+Los datos demuestran que aparentemenete no ha habido algun tipo de relegamiento hacia los indigenas, ya que todos los grupos poblacionales han demostrado que han tendido a la baja con respecto al empleo adecuado en el ecuador, además de que la tasa de desempleo (oculto y abierto) a tendido a la baja en todos los grupos.
+
 ## De las personas indígenas ¿Es posible que hayan sido las mujeres las mas que menor valor de ingreso han obtenido? ¿Existe alguna diferencia significativa entre el porcentaje de ingresos laborales que generaron las mujeres en  con respecto a los hombres?
 
-z.show(indg.groupBy("anio").pivot("genero").agg( round((sum("ingreso_laboral")*100)/13925210) ).orderBy("anio"))
-_________________________________________________________________________________________________________
+	z.show(indg.groupBy("anio").pivot("genero").agg( round((sum("ingreso_laboral")*100)/13925210) ).orderBy("anio"))
 
 
 
